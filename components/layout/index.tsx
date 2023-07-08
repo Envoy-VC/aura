@@ -13,8 +13,6 @@ const Layout = ({ children }: Props) => {
 				theme={{
 					token: {
 						colorPrimary: '#2176FF',
-						motionDurationMid: '0s',
-						motionDurationSlow: '0s',
 					},
 				}}
 			>
