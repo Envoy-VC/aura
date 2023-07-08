@@ -64,14 +64,13 @@ const Sidebar = () => {
 					{SidebarItems.map((item, index) => (
 						<Button
 							key={index}
-							type='ghost'
+							type='link'
 							icon={item.icon}
-							className={`flex items-center gap-4 text-lg font-medium animate-none ${
+							className={`flex items-center gap-4 text-lg font-medium ${
 								activeTab === item.name.toLowerCase()
 									? 'text-[#2176FF]'
 									: 'text-[#8f8f8f]'
 							}`}
-							style={{ animation: 'none' }}
 							onClick={() => setActiveTab(item.name.toLowerCase() as any)}
 						>
 							{item.name}
