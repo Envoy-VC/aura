@@ -1,5 +1,6 @@
 import React from 'react';
 import { Avatar, Button } from 'antd';
+import { CustomConnect } from '@/components';
 
 import { SidebarItem } from '@/types';
 
@@ -8,13 +9,12 @@ import {
 	PiUsersThreeDuotone,
 	PiChatTextDuotone,
 	PiBookmarkSimpleDuotone,
-	PiSignOutDuotone,
 } from 'react-icons/pi';
 import logo from '@/public/logo.png';
 
 import { ISidebarItem } from '@/types';
 
-const Sidebar = () => {
+const Sidebar: React.FC = () => {
 	const [activeTab, setActiveTab] = React.useState<SidebarItem>('chat');
 
 	const SidebarItems: ISidebarItem[] = [
@@ -66,7 +66,7 @@ const Sidebar = () => {
 							key={index}
 							type='link'
 							icon={item.icon}
-							className={`flex items-center gap-4 text-lg font-medium ${
+							className={`flex items-center gap-4 text-lg font-medium hover:!text-[#2176FF] ${
 								activeTab === item.name.toLowerCase()
 									? 'text-[#2176FF]'
 									: 'text-[#8f8f8f]'
@@ -78,15 +78,8 @@ const Sidebar = () => {
 					))}
 				</div>
 			</div>
-			<div className='justify-end'>
-				<Button
-					type='ghost'
-					icon={<PiSignOutDuotone color='#666666' size={24} />}
-					className='flex items-center gap-4 text-lg font-medium text-[#8f8f8f] flex-row-reverse'
-				>
-					Vedant
-					<Avatar src={logo.src} size={32} className='ml-2' />
-				</Button>
+			<div className='justify-end mb-4'>
+				<CustomConnect />
 			</div>
 		</div>
 	);

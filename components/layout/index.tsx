@@ -1,5 +1,7 @@
 import React from 'react';
 import { ConfigProvider } from 'antd';
+import { ThirdwebProvider } from '@thirdweb-dev/react';
+
 import Sidebar from '../sidebar';
 
 interface Props {
@@ -9,16 +11,18 @@ interface Props {
 const Layout = ({ children }: Props) => {
 	return (
 		<>
-			<ConfigProvider
-				theme={{
-					token: {
-						colorPrimary: '#2176FF',
-					},
-				}}
-			>
-				<Sidebar />
-				{children}
-			</ConfigProvider>
+			<ThirdwebProvider>
+				<ConfigProvider
+					theme={{
+						token: {
+							colorPrimary: '#2176FF',
+						},
+					}}
+				>
+					<Sidebar />
+					{children}
+				</ConfigProvider>
+			</ThirdwebProvider>
 		</>
 	);
 };
