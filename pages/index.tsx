@@ -1,9 +1,13 @@
 import type { ReactElement } from 'react';
-import { Layout } from '@/components';
+import { Layout, ChatList } from '@/components';
 import type { NextPageWithLayout } from './_app';
 
 const Page: NextPageWithLayout = () => {
-	return <p></p>;
+	return (
+		<div>
+			<ChatList />
+		</div>
+	);
 };
 
 Page.getLayout = function getLayout(page: ReactElement) {

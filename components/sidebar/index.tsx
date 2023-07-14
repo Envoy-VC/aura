@@ -57,7 +57,7 @@ const Sidebar: React.FC = () => {
 	];
 
 	return (
-		<div className='w-full h-screen max-w-[225px] border-r-2 border-[#F6F6F6] p-4 flex flex-col justify-between'>
+		<div className='h-screen max-w-[225px] border-r-2 border-[#F6F6F6] p-4 flex flex-col justify-between'>
 			<div>
 				<Avatar src={logo.src} size={40} className='ml-2' />
 				<div className='flex flex-col gap-4 mt-12'>
@@ -66,14 +66,14 @@ const Sidebar: React.FC = () => {
 							key={index}
 							type='link'
 							icon={item.icon}
-							className={`flex items-center gap-4 text-lg font-medium hover:!text-[#2176FF] ${
+							className={`flex items-center gap-4 text-lg font-medium hover:!text-[#2176FF] w-fit ${
 								activeTab === item.name.toLowerCase()
 									? 'text-[#2176FF]'
 									: 'text-[#8f8f8f]'
 							}`}
 							onClick={() => setActiveTab(item.name.toLowerCase() as any)}
 						>
-							{item.name}
+							<span className='!hidden xl:!flex'>{item.name}</span>
 						</Button>
 					))}
 				</div>

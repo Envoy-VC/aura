@@ -11,7 +11,7 @@ import {
 import logo from '@/public/logo.png';
 
 const CustomConnect: React.FC = () => {
-	const address = 'abc';
+	const address = 'a';
 	const account = '';
 
 	const [modalOpen, setModalOpen] = React.useState<boolean>(false);
@@ -35,7 +35,7 @@ const CustomConnect: React.FC = () => {
 				<Button
 					type='ghost'
 					size='middle'
-					className='flex flex-row-reverse items-center gap-4 py-4 text-lg font-medium text-[#2176FF]'
+					className='flex flex-row-reverse items-center gap-4 py-4 text-[1rem] font-medium text-[#2176FF]'
 					onClick={() => setModalOpen(true)}
 				>
 					Create Account

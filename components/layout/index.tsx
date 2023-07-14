@@ -19,8 +19,10 @@ const Layout = ({ children }: Props) => {
 						},
 					}}
 				>
-					<Sidebar />
-					{children}
+					<div className='flex flex-row'>
+						<Sidebar />
+						{children}
+					</div>
 				</ConfigProvider>
 			</ThirdwebProvider>
 		</>

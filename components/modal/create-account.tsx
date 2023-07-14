@@ -1,9 +1,13 @@
 import React from 'react';
-import { Modal, Button, Upload, Image } from 'antd';
+import { Modal, Button, Upload, Image, Input, Tooltip } from 'antd';
 import { useStorage } from '@thirdweb-dev/react';
 
-import { PiUserPlusDuotone } from 'react-icons/pi';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { PiUserPlusDuotone, PiUserDuotone } from 'react-icons/pi';
+import {
+	LoadingOutlined,
+	PlusOutlined,
+	InfoCircleOutlined,
+} from '@ant-design/icons';
 
 import type { UploadChangeParam } from 'antd/es/upload';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
@@ -76,25 +80,35 @@ const CreateAccountModal = ({ modalOpen, setModalOpen }: Props) => {
 				</>
 			}
 		>
-			<div className='!mx-auto w-fit my-12'>
-				<Upload
-					name='avatar'
-					listType='picture-circle'
-					className='avatar-uploader'
-					showUploadList={false}
-					action='https://www.mocky.io/v2/5cc8019d300000980a055e76'
-					beforeUpload={beforeUpload}
-					onChange={handleChange}
-				>
-					{imageUrl ? (
-						<Image src={imageUrl} alt='avatar' className='rounded-full' />
-					) : (
-						<div>
-							{loading ? <LoadingOutlined /> : <PlusOutlined />}
-							<div style={{ marginTop: 8 }}>Upload</div>
-						</div>
-					)}
-				</Upload>
+			<div className='flex flex-col items-center justify-center gap-6 mx-auto my-12 w-fit'>
+				<div className='mx-auto'>
+					<Upload
+						name='avatar'
+						listType='picture-circle'
+						showUploadList={false}
+						action='https://www.mocky.io/v2/5cc8019d300000980a055e76'
+						beforeUpload={beforeUpload}
+						onChange={handleChange}
+					>
+						{imageUrl ? (
+							<Image src={imageUrl} alt='avatar' className='rounded-full' />
+						) : (
+							<div>
+								{loading ? <LoadingOutlined /> : <PlusOutlined />}
+								<div style={{ marginTop: 8 }}>Upload</div>
+							</div>
+						)}
+					</Upload>
+				</div>
+				<Input
+					placeholder='Display Name'
+					prefix={<PiUserDuotone className='site-form-item-icon' />}
+					suffix={
+						<Tooltip title='Can be changed later'>
+							<InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
+						</Tooltip>
+					}
+				/>
 			</div>
 		</Modal>
 	);
