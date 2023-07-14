@@ -4,8 +4,9 @@ import type { NextPageWithLayout } from './_app';
 
 const Page: NextPageWithLayout = () => {
 	return (
-		<div>
+		<div className='flex flex-row w-full'>
 			<ChatList />
+			<div className='hidden w-full border-2 md:flex'>content</div>
 		</div>
 	);
 };
