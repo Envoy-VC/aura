@@ -12,7 +12,7 @@ import logo from '@/public/logo.png';
 
 const CustomConnect: React.FC = () => {
 	const address = 'a';
-	const account = '';
+	const account = 'a';
 
 	const [modalOpen, setModalOpen] = React.useState<boolean>(false);
 
@@ -22,7 +22,7 @@ const CustomConnect: React.FC = () => {
 				type='ghost'
 				className='flex flex-row-reverse items-center gap-4 py-4 text-lg font-medium text-[#2176FF]'
 			>
-				Connect
+				<p className='hidden xl:flex'>Connect</p>
 				<PiWalletFill color='#2176FF' size={24} />
 			</Button>
 		);
@@ -38,7 +38,7 @@ const CustomConnect: React.FC = () => {
 					className='flex flex-row-reverse items-center gap-4 py-4 text-[1rem] font-medium text-[#2176FF]'
 					onClick={() => setModalOpen(true)}
 				>
-					Create Account
+					<p className='hidden xl:flex'>Create Account</p>
 					<PiUserPlusDuotone color='#2176FF' size={24} />
 				</Button>
 			</>
@@ -51,8 +51,8 @@ const CustomConnect: React.FC = () => {
 			icon={<PiSignOutDuotone color='#666666' size={24} />}
 			className='flex items-center gap-4 text-lg font-medium text-[#8f8f8f] flex-row-reverse'
 		>
-			Vedant
-			<Avatar src={logo.src} size={32} className='ml-2' />
+			<p className='hidden xl:flex'>Vedant</p>
+			<Avatar src={logo.src} size={32} className='!hidden ml-2 xl:!flex' />
 		</Button>
 	);
 };
