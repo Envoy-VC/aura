@@ -6,3 +6,10 @@ export interface ISidebarItem {
 	name: string;
 	icon: React.JSX.Element;
 }
+
+export interface IMessage {
+	sender: string;
+	message: string;
+	timestamp: number;
+	isRecentMessage: boolean;
+}
