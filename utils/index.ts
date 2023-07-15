@@ -8,3 +8,6 @@ export const formatTimestamp = (timestamp: number) => {
 	const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
 	return `${formattedHours}:${formattedMinutes} ${ampm}`;
 };
+
+export const WALLET_CONNECT_PROJECT_ID =
+	process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || '';

@@ -22,6 +22,20 @@ const ChatBox = ({ setMessages }: Props) => {
 		}
 	};
 
+	const handleSendMessage = (content: string) => {
+		if (!content) return;
+		setMessages((prev) => [
+			...prev,
+			{
+				message: content,
+				sender: 'me',
+				timestamp: Math.floor(Date.now() / 1000),
+				isRecentMessage: isRecentMessage(prev, Math.floor(Date.now() / 1000)),
+			},
+		]);
+		setMessage('');
+	};
+
 	return (
 		<div className='flex flex-row gap-2 w-full items-center border-t-2 border-[#F2F2F2] p-4 pt-6'>
 			<ChatButtons />
@@ -35,22 +49,7 @@ const ChatBox = ({ setMessages }: Props) => {
 						<PiTranslateDuotone color='#666666' size={24} className='mr-2' />
 					}
 					onChange={(e) => setMessage(e.target.value)}
-					onPressEnter={() => {
-						console.log(Math.floor(Date.now() / 1000).toString());
-						setMessages((prev) => [
-							...prev,
-							{
-								message,
-								sender: 'me',
-								timestamp: Math.floor(Date.now() / 1000),
-								isRecentMessage: isRecentMessage(
-									prev,
-									Math.floor(Date.now() / 1000)
-								),
-							},
-						]);
-						setMessage('');
-					}}
+					onPressEnter={() => handleSendMessage(message)}
 				/>
 			</div>
 			<Button
@@ -58,6 +57,7 @@ const ChatBox = ({ setMessages }: Props) => {
 				className=' bg-[#2176FF] w-fit !py-6 flex items-center flex-row-reverse font-medium'
 				size='large'
 				icon={<PiArrowRightBold color='#fff' size={24} className='ml-2' />}
+				onClick={() => handleSendMessage(message)}
 			>
 				Send
 			</Button>

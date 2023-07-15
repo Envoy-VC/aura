@@ -13,12 +13,14 @@ const ChatCard = ({ isActive }: Props) => {
 	const router = useRouter();
 	return (
 		<div
-			className={`flex flex-row items-center justify-between w-full gap-4 p-2 rounded-xl animate-all duration-200 ease-in-out ${
+			className={`flex flex-row items-center justify-between w-full gap-4 p-2 rounded-xl animate-all duration-200 ease-in-out select-none ${
 				isActive ? 'bg-[#0F2131]' : 'hover:bg-[#f0f0f0]'
 			}`}
-			onClick={() => router.push('abc')}
 		>
-			<div className='flex flex-row gap-4'>
+			<div
+				className='flex flex-row gap-4 cursor-pointer'
+				onClick={() => router.push('abc')}
+			>
 				<div className='w-12 h-12 rounded-full'>
 					<Avatar
 						size={{ xs: 42, sm: 48, md: 48, lg: 48, xl: 48, xxl: 48 }}

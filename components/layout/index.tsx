@@ -9,6 +9,8 @@ import {
 
 import Sidebar from '../sidebar';
 
+import { WALLET_CONNECT_PROJECT_ID } from '@/utils';
+
 interface Props {
 	children: React.ReactNode;
 }
@@ -21,7 +23,7 @@ const Layout = ({ children }: Props) => {
 					metamaskWallet(),
 					trustWallet(),
 					walletConnect({
-						projectId: '4a57bdcd1d5c5c336bc5908073b97e00',
+						projectId: WALLET_CONNECT_PROJECT_ID,
 						qrModalOptions: {
 							themeMode: 'light',
 						},
