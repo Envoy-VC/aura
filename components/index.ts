@@ -5,6 +5,7 @@ import ChatList from './chat-list';
 import ChatCard from './chat-card';
 import ChatBox from './chat-box';
 import ChatButtons from './chat-buttons';
+import ChatPill from './chat-pill';
 
 export {
 	Layout,
@@ -14,4 +15,5 @@ export {
 	ChatCard,
 	ChatBox,
 	ChatButtons,
+	ChatPill,
 };
