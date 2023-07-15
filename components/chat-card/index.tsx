@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Avatar, Button } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/router';
 
 import { PiDotsThreeVerticalBold } from 'react-icons/pi';
 
@@ -10,18 +10,22 @@ interface Props {
 }
 
 const ChatCard = ({ isActive }: Props) => {
+	const router = useRouter();
 	return (
 		<div
 			className={`flex flex-row items-center justify-between w-full gap-4 p-2 rounded-xl animate-all duration-200 ease-in-out ${
 				isActive ? 'bg-[#0F2131]' : 'hover:bg-[#f0f0f0]'
 			}`}
+			onClick={() => router.push('abc')}
 		>
 			<div className='flex flex-row gap-4'>
-				<Avatar
-					size={{ xs: 42, sm: 48, md: 48, lg: 48, xl: 48, xxl: 48 }}
-					src='https://ipfs.io/ipfs/QmZMY6iuh3dQiSVXBbLbMWcZConzVXqoBXjEeFC22LapkN'
-					className='bg-[#BFBFBF] border-none'
-				/>
+				<div className='w-12 h-12 rounded-full'>
+					<Avatar
+						size={{ xs: 42, sm: 48, md: 48, lg: 48, xl: 48, xxl: 48 }}
+						src='https://ipfs.io/ipfs/QmZMY6iuh3dQiSVXBbLbMWcZConzVXqoBXjEeFC22LapkN'
+						className='bg-[#BFBFBF] border-none'
+					/>
+				</div>
 				<div className=''>
 					<p
 						className={`font-semibold text-[1rem] ${
