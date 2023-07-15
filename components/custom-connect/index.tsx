@@ -1,6 +1,7 @@
 import React from 'react';
 import { Avatar, Button } from 'antd';
-import { CreateAccountModal } from '../modal';
+import { useAddress } from '@thirdweb-dev/react';
+import { CreateAccountModal, ConnectWalletModal } from '../modal';
 
 import {
 	PiSignOutDuotone,
@@ -11,32 +12,46 @@ import {
 import logo from '@/public/logo.png';
 
 const CustomConnect: React.FC = () => {
-	const address = 'a';
-	const account = 'a';
+	const address = useAddress();
+	const account = '';
 
-	const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+	const [accountModalOpen, setAccountModalOpen] =
+		React.useState<boolean>(false);
+
+	const [connectWalletModalOpen, setConnectWalletModalOpen] =
+		React.useState<boolean>(false);
 
 	if (!address) {
 		return (
-			<Button
-				type='ghost'
-				className='flex flex-row-reverse items-center gap-4 py-4 text-lg font-medium text-[#2176FF]'
-			>
-				<p className='hidden xl:flex'>Connect</p>
-				<PiWalletFill color='#2176FF' size={24} />
-			</Button>
+			<>
+				<ConnectWalletModal
+					modalOpen={connectWalletModalOpen}
+					setModalOpen={setConnectWalletModalOpen}
+				/>
+				<Button
+					type='ghost'
+					className='flex flex-row-reverse items-center gap-4 py-4 text-lg font-medium text-[#2176FF]'
+					onClick={() => setConnectWalletModalOpen(true)}
+				>
+					<p className='hidden xl:flex'>Connect</p>
+					<PiWalletFill color='#2176FF' size={24} />
+				</Button>
+			</>
 		);
 	}
 
 	if (address && !account) {
 		return (
 			<>
-				<CreateAccountModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
+				<CreateAccountModal
+					modalOpen={accountModalOpen}
+					setModalOpen={setAccountModalOpen}
+				/>
 				<Button
 					type='ghost'
 					size='middle'
 					className='flex flex-row-reverse items-center gap-4 py-4 text-[1rem] font-medium text-[#2176FF]'
-					onClick={() => setModalOpen(true)}
+					onClick={() => setAccountModalOpen(true)}
 				>
 					<p className='hidden xl:flex'>Create Account</p>
 					<PiUserPlusDuotone color='#2176FF' size={24} />

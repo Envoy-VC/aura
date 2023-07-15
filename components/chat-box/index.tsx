@@ -15,10 +15,7 @@ const ChatBox = ({ setMessages }: Props) => {
 
 	const isRecentMessage = (messages: IMessage[], timestamp: number) => {
 		if (messages.length === 0) return false;
-		else if (
-			timestamp - messages.at(messages.length - 1)!?.timestamp >
-			60 * 5
-		) {
+		else if (timestamp - messages.at(messages.length - 1)!?.timestamp > 10) {
 			return false;
 		} else {
 			return true;

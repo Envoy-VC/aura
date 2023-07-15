@@ -9,3 +9,7 @@
 		font-family: 'Inter', sans-serif;
 	}
 }
+
+html {
+	--wcm-z-index: 1000 !important;
+}

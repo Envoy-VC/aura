@@ -8,7 +8,6 @@ const Page: NextPageWithLayout = () => {
 	return (
 		<div className='flex flex-row w-full'>
 			<ChatList />
-			<ChatArea />
 		</div>
 	);
 };
