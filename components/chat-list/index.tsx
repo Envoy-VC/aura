@@ -31,7 +31,7 @@ const ChatList = () => {
 				{Array(80)
 					.fill(1)
 					.map((_, i) => (
-						<ChatCard key={i} isActive={i === 0} />
+						<ChatCard key={i} />
 					))}
 			</div>
 		</div>

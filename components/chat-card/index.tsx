@@ -5,17 +5,11 @@ import { useRouter } from 'next/router';
 
 import { PiDotsThreeVerticalBold } from 'react-icons/pi';
 
-interface Props {
-	isActive?: boolean;
-}
-
-const ChatCard = ({ isActive }: Props) => {
+const ChatCard = () => {
 	const router = useRouter();
 	return (
 		<div
-			className={`flex flex-row items-center justify-between w-full gap-4 p-2 rounded-xl animate-all duration-200 ease-in-out select-none ${
-				isActive ? 'bg-[#0F2131]' : 'hover:bg-[#f0f0f0]'
-			}`}
+			className={`flex flex-row items-center justify-between w-full gap-4 p-2 rounded-xl animate-all duration-200 ease-in-out select-none hover:bg-[#5a99ff2f]`}
 		>
 			<div
 				className='flex flex-row gap-4 cursor-pointer'
@@ -29,18 +23,10 @@ const ChatCard = ({ isActive }: Props) => {
 					/>
 				</div>
 				<div className=''>
-					<p
-						className={`font-semibold text-[1rem] ${
-							isActive ? 'text-white ' : 'text-[#000]'
-						}`}
-					>
-						Ricky Smith
-					</p>
+					<p className={`font-semibold text-[1rem]`}>Ricky Smith</p>
 					<div className='text-[#A4A8AE] font-medium text-[0.75rem] flex flex-row'>
 						<div>You: Okay, Let&lsquo;s get...</div>
-						<div className={`${isActive ? 'text-[#236baa]' : ''}`}>
-							• 1 min ago
-						</div>
+						<div>• 1 min ago</div>
 					</div>
 				</div>
 			</div>
