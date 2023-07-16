@@ -13,6 +13,7 @@ import {
 import logo from '@/public/logo.png';
 
 import { ISidebarItem } from '@/types';
+import { PiDotsThreeVerticalBold } from 'react-icons/pi';
 
 const Sidebar: React.FC = () => {
 	const [activeTab, setActiveTab] = React.useState<SidebarItem>('chat');
@@ -59,7 +60,9 @@ const Sidebar: React.FC = () => {
 	return (
 		<div className='h-screen max-w-[225px] border-r-2 border-[#F6F6F6] p-4 sm:flex flex-col justify-between hidden'>
 			<div>
-				<Avatar src={logo.src} size={40} className='ml-2' />
+				<div className='w-10 h-40'>
+					<Avatar src={logo.src} size={40} className='ml-2' />
+				</div>
 				<div className='flex flex-col gap-4 mt-12'>
 					{SidebarItems.map((item, index) => (
 						<Button

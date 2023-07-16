@@ -1,9 +1,15 @@
 import React from 'react';
 import { Avatar, Button } from 'antd';
-import { useAddress, ConnectWallet, useSigner } from '@thirdweb-dev/react';
+import { useAddress, useSigner } from '@thirdweb-dev/react';
 import { useClient } from '@xmtp/react-sdk';
 
-import { PiSignOutDuotone, PiTelegramLogoDuotone } from 'react-icons/pi';
+import { ConnectWalletModal } from '../modal';
+
+import {
+	PiSignOutDuotone,
+	PiTelegramLogoDuotone,
+	PiWalletFill,
+} from 'react-icons/pi';
 
 import logo from '@/public/logo.png';
 
@@ -12,22 +18,33 @@ const CustomConnect: React.FC = () => {
 	const signer = useSigner();
 	const { client, isLoading, initialize } = useClient();
 
-	const init = React.useCallback(async () => {
+	const [connectWalletModalOpen, setConnectWalletModalOpen] =
+		React.useState<boolean>(false);
+
+	const init = async () => {
 		try {
 			await initialize({ signer });
 		} catch (error) {
 			console.log(error);
 		}
-	}, [initialize]);
+	};
 
 	if (!address) {
 		return (
-			<ConnectWallet
-				theme='light'
-				className='!bg-white !text-[#2176FF] !text-lg !p-2'
-				style={{ paddingInline: '0px' }}
-				btnTitle={'🔗'}
-			/>
+			<>
+				<ConnectWalletModal
+					modalOpen={connectWalletModalOpen}
+					setModalOpen={setConnectWalletModalOpen}
+				/>
+				<Button
+					type='ghost'
+					className='flex flex-row-reverse items-center gap-4 py-4 text-lg font-medium text-[#2176FF]'
+					onClick={() => setConnectWalletModalOpen(true)}
+				>
+					<p className='hidden xl:flex'>Connect</p>
+					<PiWalletFill color='#2176FF' size={24} />
+				</Button>
+			</>
 		);
 	}
 
