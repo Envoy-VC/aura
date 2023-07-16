@@ -60,7 +60,7 @@ const Sidebar: React.FC = () => {
 	return (
 		<div className='h-screen max-w-[225px] border-r-2 border-[#F6F6F6] p-4 sm:flex flex-col justify-between hidden'>
 			<div>
-				<div className='w-10 h-40'>
+				<div className='w-10 h-10'>
 					<Avatar src={logo.src} size={40} className='ml-2' />
 				</div>
 				<div className='flex flex-col gap-4 mt-12'>
