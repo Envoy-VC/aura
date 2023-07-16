@@ -1,60 +1,47 @@
 import React from 'react';
 import { Avatar, Button } from 'antd';
-import { useAddress } from '@thirdweb-dev/react';
-import { CreateAccountModal, ConnectWalletModal } from '../modal';
+import { useAddress, ConnectWallet, useSigner } from '@thirdweb-dev/react';
+import { useClient } from '@xmtp/react-sdk';
 
-import {
-	PiSignOutDuotone,
-	PiWalletFill,
-	PiUserPlusDuotone,
-} from 'react-icons/pi';
+import { PiSignOutDuotone, PiTelegramLogoDuotone } from 'react-icons/pi';
 
 import logo from '@/public/logo.png';
 
 const CustomConnect: React.FC = () => {
 	const address = useAddress();
-	const account = '';
+	const signer = useSigner();
+	const { client, isLoading, initialize } = useClient();
 
-	const [accountModalOpen, setAccountModalOpen] =
-		React.useState<boolean>(false);
-
-	const [connectWalletModalOpen, setConnectWalletModalOpen] =
-		React.useState<boolean>(false);
+	const init = React.useCallback(async () => {
+		try {
+			await initialize({ signer });
+		} catch (error) {
+			console.log(error);
+		}
+	}, [initialize]);
 
 	if (!address) {
 		return (
-			<>
-				<ConnectWalletModal
-					modalOpen={connectWalletModalOpen}
-					setModalOpen={setConnectWalletModalOpen}
-				/>
-				<Button
-					type='ghost'
-					className='flex flex-row-reverse items-center gap-4 py-4 text-lg font-medium text-[#2176FF]'
-					onClick={() => setConnectWalletModalOpen(true)}
-				>
-					<p className='hidden xl:flex'>Connect</p>
-					<PiWalletFill color='#2176FF' size={24} />
-				</Button>
-			</>
+			<ConnectWallet
+				theme='light'
+				className='!bg-white !text-[#2176FF] !text-lg !p-2'
+				style={{ paddingInline: '0px' }}
+				btnTitle={'🔗'}
+			/>
 		);
 	}
 
-	if (address && !account) {
+	if (address && !client) {
 		return (
 			<>
-				<CreateAccountModal
-					modalOpen={accountModalOpen}
-					setModalOpen={setAccountModalOpen}
-				/>
 				<Button
 					type='ghost'
 					size='middle'
 					className='flex flex-row-reverse items-center gap-4 py-4 text-[1rem] font-medium text-[#2176FF]'
-					onClick={() => setAccountModalOpen(true)}
+					onClick={init}
 				>
-					<p className='hidden xl:flex'>Create Account</p>
-					<PiUserPlusDuotone color='#2176FF' size={24} />
+					<p className='hidden xl:flex'>Initialize</p>
+					<PiTelegramLogoDuotone color='#2176FF' size={24} />
 				</Button>
 			</>
 		);

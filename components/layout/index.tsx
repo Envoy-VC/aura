@@ -5,9 +5,13 @@ import {
 	metamaskWallet,
 	trustWallet,
 	walletConnect,
+	useSigner,
+	useAddress,
 } from '@thirdweb-dev/react';
 
-import Sidebar from '../sidebar';
+import { XMTPProvider, useClient } from '@xmtp/react-sdk';
+
+import { Sidebar } from '@/components';
 
 import { WALLET_CONNECT_PROJECT_ID } from '@/utils';
 
@@ -38,10 +42,12 @@ const Layout = ({ children }: Props) => {
 						},
 					}}
 				>
-					<div className='flex flex-row'>
-						<Sidebar />
-						{children}
-					</div>
+					<XMTPProvider>
+						<div className='flex flex-row'>
+							<Sidebar />
+							{children}
+						</div>
+					</XMTPProvider>
 				</ConfigProvider>
 			</ThirdwebProvider>
 		</>

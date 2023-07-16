@@ -13,3 +13,9 @@
 html {
 	--wcm-z-index: 1000 !important;
 }
+
+.tw-connect-wallet {
+	border: 2px solid #2176ff !important;
+	min-width: 50px !important;
+	max-width: fit-content !important;
+}
