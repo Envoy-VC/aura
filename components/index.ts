@@ -1,5 +1,6 @@
 import Layout from './layout';
 import Sidebar from './sidebar';
+import Navbar from './navbar';
 import CustomConnect from './custom-connect';
 import ChatList from './chat-list';
 import ChatCard from './chat-card';
@@ -9,6 +10,7 @@ import ChatPill from './chat-pill';
 
 export {
 	Layout,
+	Navbar,
 	Sidebar,
 	CustomConnect,
 	ChatList,
