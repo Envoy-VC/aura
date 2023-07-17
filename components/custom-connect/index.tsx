@@ -1,7 +1,9 @@
 import React from 'react';
-import { Avatar, Button } from 'antd';
+import { Avatar, Button, Skeleton } from 'antd';
 import { useAddress, useSigner, useDisconnect } from '@thirdweb-dev/react';
-import { Client, useClient } from '@xmtp/react-sdk';
+import { useClient } from '@xmtp/react-sdk';
+
+import { useEns } from '@/hooks';
 
 import { ConnectWalletModal } from '../modal';
 
@@ -17,7 +19,10 @@ const CustomConnect: React.FC = () => {
 	const address = useAddress();
 	const disconnect = useDisconnect();
 	const signer = useSigner();
-	const { client, isLoading, initialize } = useClient();
+	const { client, initialize } = useClient();
+	const { data, error, isLoading } = useEns({
+		ethAddress: address,
+	});
 
 	const [connectWalletModalOpen, setConnectWalletModalOpen] =
 		React.useState<boolean>(false);
@@ -78,8 +83,32 @@ const CustomConnect: React.FC = () => {
 			className='flex items-center gap-4 text-lg font-medium text-[#8f8f8f] flex-row-reverse'
 			onClick={disconnect}
 		>
-			<p className='hidden xl:flex'>Vedant</p>
-			<Avatar src={logo.src} size={32} className='!hidden ml-2 xl:!flex' />
+			<p className='hidden xl:flex'>
+				{isLoading ? (
+					<Skeleton
+						active
+						paragraph={{
+							rows: 0,
+							className: '!m-0 !p-0',
+						}}
+						className='!w-[350px]'
+					/>
+				) : (
+					data?.ensName || address.slice(0, 4) + '...'
+				)}
+			</p>
+			{isLoading ? (
+				<Skeleton.Avatar active={true} size={44} />
+			) : (
+				<Avatar
+					size={32}
+					src={
+						data?.avatar ||
+						'https://ipfs.io/ipfs/QmZMY6iuh3dQiSVXBbLbMWcZConzVXqoBXjEeFC22LapkN'
+					}
+					className='!hidden ml-2 xl:!flex'
+				/>
+			)}
 		</Button>
 	);
 };

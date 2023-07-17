@@ -13,7 +13,6 @@ import {
 import logo from '@/public/logo.png';
 
 import { ISidebarItem } from '@/types';
-import { PiDotsThreeVerticalBold } from 'react-icons/pi';
 
 const Sidebar: React.FC = () => {
 	const [activeTab, setActiveTab] = React.useState<SidebarItem>('chat');
