@@ -1,8 +1,12 @@
+import React from 'react';
 import type { ReactElement } from 'react';
 import { Layout, ChatList } from '@/components';
 import type { NextPageWithLayout } from './_app';
 
-import { ChatArea } from '@/sections';
+import { useConversations } from '@xmtp/react-sdk';
+import { useAddress } from '@thirdweb-dev/react';
+
+import { useEns } from '@/hooks';
 
 const Page: NextPageWithLayout = () => {
 	return (

@@ -2,10 +2,15 @@ import React from 'react';
 
 import { Avatar, Button } from 'antd';
 import { useRouter } from 'next/router';
+import { useEns } from '@/hooks';
 
 import { PiDotsThreeVerticalBold } from 'react-icons/pi';
+import type { Conversation } from '@xmtp/react-sdk';
 
-const ChatCard = () => {
+interface ChatCardProps extends Conversation {}
+
+const ChatCard = ({ clientAddress, peerAddress }: ChatCardProps) => {
+	const { data, error, loading } = useEns({ ethAddress: peerAddress });
 	const router = useRouter();
 	return (
 		<div
@@ -18,12 +23,18 @@ const ChatCard = () => {
 				<div className='w-12 h-12 rounded-full'>
 					<Avatar
 						size={{ xs: 42, sm: 48, md: 48, lg: 48, xl: 48, xxl: 48 }}
-						src='https://ipfs.io/ipfs/QmZMY6iuh3dQiSVXBbLbMWcZConzVXqoBXjEeFC22LapkN'
+						src={
+							data?.avatar ||
+							'https://ipfs.io/ipfs/QmZMY6iuh3dQiSVXBbLbMWcZConzVXqoBXjEeFC22LapkN'
+						}
 						className='bg-[#BFBFBF] border-none'
 					/>
 				</div>
 				<div className=''>
-					<p className={`font-semibold text-[1rem]`}>Ricky Smith</p>
+					<p className={`font-semibold text-[1rem]`}>
+						{data?.ensName ||
+							peerAddress.slice(0, 6) + '...' + peerAddress.slice(-4)}
+					</p>
 					<div className='text-[#A4A8AE] font-medium text-[0.75rem] flex flex-row'>
 						<div>You: Okay, Let&lsquo;s get...</div>
 						<div>• 1 min ago</div>

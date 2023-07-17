@@ -1,8 +1,44 @@
 import React from 'react';
 import { Input, Button } from 'antd';
+import { useClient, useConversations } from '@xmtp/react-sdk';
+import { useAddress } from '@thirdweb-dev/react';
+
 import ChatCard from '../chat-card';
 
 import { PiMagnifyingGlassDuotone, PiPlusCircleDuotone } from 'react-icons/pi';
+
+const Chats = () => {
+	const address = useAddress();
+	const { client } = useClient();
+	const { conversations, error, isLoading } = useConversations();
+
+	if (!address) {
+		return (
+			<div className='text-lg font-semibold text-black opacity-75'>
+				Connect your wallet
+			</div>
+		);
+	}
+
+	if (address && !client) {
+		return (
+			<div className='text-lg font-semibold text-black opacity-75'>
+				Initialize XMTP to Chat
+			</div>
+		);
+	}
+
+	if (address && client) {
+		return (
+			<div className='flex flex-col w-full gap-[1px] overflow-y-scroll scrollbar-hide'>
+				{typeof conversations !== undefined &&
+					conversations.map((conversation, i) => (
+						<ChatCard key={i} {...conversation} />
+					))}
+			</div>
+		);
+	}
+};
 
 const ChatList = () => {
 	return (
@@ -27,13 +63,7 @@ const ChatList = () => {
 					}
 				/>
 			</div>
-			<div className='flex flex-col w-full gap-[1px] overflow-y-scroll scrollbar-hide'>
-				{Array(80)
-					.fill(1)
-					.map((_, i) => (
-						<ChatCard key={i} />
-					))}
-			</div>
+			<Chats />
 		</div>
 	);
 };
