@@ -33,7 +33,7 @@ const Chats = () => {
 			<div className='flex flex-col w-full gap-[1px] overflow-y-scroll scrollbar-hide'>
 				{typeof conversations !== undefined &&
 					conversations.map((conversation, i) => (
-						<ChatCard key={i} {...conversation} />
+						<ChatCard key={i} conversation={conversation} />
 					))}
 			</div>
 		);

@@ -19,7 +19,7 @@ interface IError {
 
 const useEns = ({ ethAddress }: Props) => {
 	const [data, setData] = useState<IData>();
-	const [loading, setLoading] = useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [error, setError] = useState<IError>();
 
 	const address = useAddress();
@@ -32,11 +32,11 @@ const useEns = ({ ethAddress }: Props) => {
 
 	useEffect(() => {
 		if (!ethAddress || address) {
-			setLoading(false);
+			setIsLoading(false);
 			setError({ message: 'No address provided' });
 		}
 		if (ethAddress) {
-			setLoading(true);
+			setIsLoading(true);
 			provider
 				?.lookupAddress(ethAddr!)
 				.then(async (res) => {
@@ -45,17 +45,17 @@ const useEns = ({ ethAddress }: Props) => {
 						setData({ ensName: res || '', avatar: avatar || '' });
 					}
 
-					setLoading(false);
+					setIsLoading(false);
 				})
 				.catch((err) => {
 					setError({ message: err.message });
 					console.log(error);
-					setLoading(false);
+					setIsLoading(false);
 				});
 		}
 	}, [ethAddress]);
 
-	return { data, loading, error };
+	return { data, isLoading, error };
 };
 
 export default useEns;
