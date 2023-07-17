@@ -13,7 +13,7 @@ const Navbar = () => {
 	};
 
 	return (
-		<div className='flex flex-row justify-between p-4 border-2 sm:hidden'>
+		<div className='flex flex-row justify-between p-4 sm:hidden'>
 			<Button
 				type='ghost'
 				size='middle'
