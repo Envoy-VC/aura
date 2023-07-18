@@ -1,18 +1,28 @@
 import React from 'react';
 import type { ReactElement } from 'react';
-import { Layout, ChatList } from '@/components';
 import type { NextPageWithLayout } from './_app';
+import NestedLayout from '@/components/layout/nested-layout';
+import { ChatContext } from '@/components/layout/nested-layout';
+
+import { Layout, ChatList } from '@/components';
+import { ChatArea } from '@/sections';
 
 const Page: NextPageWithLayout = () => {
+	const { activeChat } = React.useContext(ChatContext);
 	return (
 		<div className='flex flex-row w-full'>
 			<ChatList />
+			{activeChat && <ChatArea />}
 		</div>
 	);
 };
 
 Page.getLayout = function getLayout(page: ReactElement) {
-	return <Layout>{page}</Layout>;
+	return (
+		<Layout>
+			<NestedLayout>{page}</NestedLayout>
+		</Layout>
+	);
 };
 
 export default Page;

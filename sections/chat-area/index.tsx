@@ -24,7 +24,7 @@ const ChatArea = () => {
 	return (
 		<div className='w-full flex flex-col justify-end items-start h-[100dvh]'>
 			<div
-				className='p-4 flex flex-col gap-1 overflow-y-scroll w-full scrollbar-hide px-8'
+				className='flex flex-col w-full gap-1 p-4 px-8 overflow-y-scroll scrollbar-hide'
 				ref={chatContainer}
 			>
 				{messages &&

@@ -1,16 +1,20 @@
 import React from 'react';
 import { Input, Button } from 'antd';
-import { useClient, useConversations } from '@xmtp/react-sdk';
+import { Conversation, useClient } from '@xmtp/react-sdk';
 import { useAddress } from '@thirdweb-dev/react';
-
+import { ChatContext } from '../layout/nested-layout';
 import ChatCard from '../chat-card';
 
 import { PiMagnifyingGlassDuotone, PiPlusCircleDuotone } from 'react-icons/pi';
 
-const Chats = () => {
+export interface ChatProps {
+	conversations: Conversation[];
+	setActiveChat: React.Dispatch<React.SetStateAction<Conversation | null>>;
+}
+
+const Chats = ({ conversations, setActiveChat }: ChatProps) => {
 	const address = useAddress();
 	const { client } = useClient();
-	const { conversations, error, isLoading } = useConversations();
 
 	if (!address) {
 		return (
@@ -33,7 +37,11 @@ const Chats = () => {
 			<div className='flex flex-col w-full gap-[1px] overflow-y-scroll scrollbar-hide'>
 				{typeof conversations !== undefined &&
 					conversations.map((conversation, i) => (
-						<ChatCard key={i} conversation={conversation} />
+						<ChatCard
+							key={i}
+							conversation={conversation}
+							setActiveChat={setActiveChat}
+						/>
 					))}
 			</div>
 		);
@@ -41,6 +49,7 @@ const Chats = () => {
 };
 
 const ChatList = () => {
+	const { conversations, setActiveChat } = React.useContext(ChatContext);
 	return (
 		<div className='h-screen border-r-2 border-[#F6F6F6] flex flex-col justify-start items-center py-4 px-1 gap-6 w-full md:w-[300px] lg:w-[400px]'>
 			<div className='flex flex-row items-center justify-between w-full px-4 mx-4 mt-6 text-2xl font-semibold text-black'>
@@ -63,7 +72,7 @@ const ChatList = () => {
 					}
 				/>
 			</div>
-			<Chats />
+			<Chats conversations={conversations} setActiveChat={setActiveChat} />
 		</div>
 	);
 };

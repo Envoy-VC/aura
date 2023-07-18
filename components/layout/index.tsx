@@ -8,10 +8,7 @@ import {
 } from '@thirdweb-dev/react';
 
 import { XMTPProvider } from '@xmtp/react-sdk';
-
-import { Sidebar, Navbar } from '@/components';
-
-import { WALLET_CONNECT_PROJECT_ID } from '@/utils';
+import { WALLET_CONNECT_PROJECT_ID } from '../../utils/index';
 
 interface Props {
 	children: React.ReactNode;
@@ -40,13 +37,7 @@ const Layout = ({ children }: Props) => {
 						},
 					}}
 				>
-					<XMTPProvider>
-						<div className='flex flex-col sm:flex-row'>
-							<Sidebar />
-							<Navbar />
-							{children}
-						</div>
-					</XMTPProvider>
+					<XMTPProvider>{children}</XMTPProvider>
 				</ConfigProvider>
 			</ThirdwebProvider>
 		</>

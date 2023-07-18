@@ -10,24 +10,30 @@ import { getMessageTime } from '@/utils';
 import { PiDotsThreeVerticalBold, PiUserBold } from 'react-icons/pi';
 import { Conversation, SortDirection } from '@xmtp/react-sdk';
 
-const ChatCard = ({ conversation }: { conversation: Conversation }) => {
+interface Props {
+	conversation: Conversation;
+	setActiveChat: React.Dispatch<React.SetStateAction<Conversation | null>>;
+}
+
+const ChatCard = ({ conversation, setActiveChat }: Props) => {
 	const { data, error, isLoading } = useEns({
 		ethAddress: conversation?.peerAddress,
 	});
 
 	const { messages, isLoading: isMessagesLoading } = useMessages(conversation, {
-		limit: 1,
 		direction: SortDirection.SORT_DIRECTION_DESCENDING,
 	});
 
-	const router = useRouter();
 	return (
 		<div
 			className={`flex flex-row items-center justify-between w-full gap-4 p-2 rounded-xl animate-all duration-200 ease-in-out select-none hover:bg-[#5a99ff2f]`}
 		>
 			<div
 				className='flex flex-row gap-4 cursor-pointer'
-				onClick={() => router.push(conversation?.peerAddress)}
+				onClick={() => {
+					setActiveChat(conversation);
+					console.log(conversation?.peerAddress);
+				}}
 			>
 				<div className='w-12 h-12 rounded-full'>
 					{isLoading ? (
@@ -35,7 +41,15 @@ const ChatCard = ({ conversation }: { conversation: Conversation }) => {
 					) : (
 						<Avatar
 							size={{ xs: 42, sm: 48, md: 48, lg: 48, xl: 48, xxl: 48 }}
-							src={data?.avatar || <PiUserBold size={32} color='#666666' className='m-auto mt-1' />}
+							src={
+								data?.avatar || (
+									<PiUserBold
+										size={32}
+										color='#666666'
+										className='m-auto mt-1'
+									/>
+								)
+							}
 							className='bg-[#f5f5f5]'
 						/>
 					)}
