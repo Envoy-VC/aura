@@ -11,6 +11,7 @@ import {
 	PiSignOutDuotone,
 	PiTelegramLogoDuotone,
 	PiWalletFill,
+	PiUserBold,
 } from 'react-icons/pi';
 
 const CustomConnect: React.FC = () => {
@@ -100,10 +101,7 @@ const CustomConnect: React.FC = () => {
 			) : (
 				<Avatar
 					size={32}
-					src={
-						data?.avatar ||
-						'https://ipfs.io/ipfs/QmZMY6iuh3dQiSVXBbLbMWcZConzVXqoBXjEeFC22LapkN'
-					}
+					src={data?.avatar || <PiUserBold size={32} color='#666666' />}
 					className='!hidden ml-2 xl:!flex'
 				/>
 			)}

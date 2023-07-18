@@ -7,7 +7,7 @@ import { useMessages } from '@xmtp/react-sdk';
 
 import { getMessageTime } from '@/utils';
 
-import { PiDotsThreeVerticalBold } from 'react-icons/pi';
+import { PiDotsThreeVerticalBold, PiUserBold } from 'react-icons/pi';
 import { Conversation, SortDirection } from '@xmtp/react-sdk';
 
 const ChatCard = ({ conversation }: { conversation: Conversation }) => {
@@ -35,11 +35,8 @@ const ChatCard = ({ conversation }: { conversation: Conversation }) => {
 					) : (
 						<Avatar
 							size={{ xs: 42, sm: 48, md: 48, lg: 48, xl: 48, xxl: 48 }}
-							src={
-								data?.avatar ||
-								'https://ipfs.io/ipfs/QmZMY6iuh3dQiSVXBbLbMWcZConzVXqoBXjEeFC22LapkN'
-							}
-							className='bg-[#BFBFBF] border-none'
+							src={data?.avatar || <PiUserBold size={32} color='#666666' className='m-auto mt-1' />}
+							className='bg-[#f5f5f5]'
 						/>
 					)}
 				</div>
