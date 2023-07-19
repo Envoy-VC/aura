@@ -61,7 +61,7 @@ const ChatPill = ({ content, sent, senderAddress }: ChatPillProps) => {
 					</div>
 				</div>
 				<div
-					className={`rounded-xl lg:rounded-2xl py-1 lg:py-3 font-medium text-[1rem] px-2 md:px-4 ${
+					className={`rounded-xl lg:rounded-2xl py-1 lg:py-3 font-medium text-[1rem] px-2 md:px-4 whitespace-pre-wrap max-w-[350px] lg:max-w-[500px] break-words ${
 						senderAddress === address
 							? '!rounded-tr-none bg-[#2176FF] text-white text-right w-fit'
 							: 'rounded-tl-none bg-[#F8F8F8]'

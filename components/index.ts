@@ -7,6 +7,7 @@ import ChatCard from './chat-card';
 import ChatBox from './chat-box';
 import ChatButtons from './chat-buttons';
 import ChatPill from './chat-pill';
+import ChatHeader from './chat-header';
 
 export {
 	Layout,
@@ -18,4 +19,5 @@ export {
 	ChatBox,
 	ChatButtons,
 	ChatPill,
+	ChatHeader,
 };

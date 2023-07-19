@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Avatar, Button, Skeleton } from 'antd';
 import { useMessages } from '@xmtp/react-sdk';
 import { ChatContext } from '../layout/nested-layout';
@@ -31,7 +30,6 @@ const ChatCard = ({ conversation, setActiveChat }: Props) => {
 				className='flex flex-row gap-4 cursor-pointer'
 				onClick={() => {
 					setActiveChat(conversation);
-					console.log(conversation?.peerAddress);
 				}}
 			>
 				<div className='w-12 h-12 rounded-full'>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { ethers } from 'ethers';
 import { Conversation, useConversations } from '@xmtp/react-sdk';
-import { useAddress } from '@thirdweb-dev/react';
 import { Sidebar, Navbar } from '@/components';
 
 import { IENSDetails } from '@/types';

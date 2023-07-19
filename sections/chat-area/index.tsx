@@ -1,17 +1,21 @@
 import React from 'react';
 import { useMessages } from '@xmtp/react-sdk';
-import { ChatBox, ChatPill } from '@/components';
-
-import type { Conversation, DecodedMessage } from '@xmtp/react-sdk';
+import { ChatBox, ChatPill, ChatHeader } from '@/components';
+import { ChatContext } from '@/components/layout/nested-layout';
+import type { Conversation } from '@xmtp/react-sdk';
 
 interface Props {
 	conversation: Conversation;
 }
 
 const ChatArea = ({ conversation }: Props) => {
-	const { error, messages, isLoading } = useMessages(conversation);
-
+	const { ensDetails } = React.useContext(ChatContext);
+	const { messages, isLoading } = useMessages(conversation);
 	const chatContainer = React.useRef<HTMLDivElement>(null);
+
+	let data = ensDetails.find(
+		(item) => item.address === conversation.peerAddress
+	);
 
 	const Scroll = () => {
 		const { offsetHeight, scrollHeight, scrollTop } =
@@ -26,20 +30,29 @@ const ChatArea = ({ conversation }: Props) => {
 	}, [messages]);
 
 	return (
-		<div className='w-full flex flex-col justify-end items-start h-[100dvh]'>
-			<div
-				className='flex flex-col w-full gap-1 p-4 px-8 overflow-y-scroll scrollbar-hide'
-				ref={chatContainer}
-			>
-				{!isLoading ? (
-					messages.map((message) => (
-						<ChatPill key={message.id} {...message} toBytes={message.toBytes} />
-					))
-				) : (
-					<div>loading</div>
-				)}
+		<div className='w-full flex flex-col justify-between items-start h-[92dvh]'>
+			<div className='flex justify-start'>
+				<ChatHeader data={data!} />
 			</div>
-			<ChatBox />
+			<div className='w-full'>
+				<div
+					className='flex flex-col w-full gap-1 p-4 px-8 overflow-y-scroll scrollbar-hide'
+					ref={chatContainer}
+				>
+					{!isLoading ? (
+						messages.map((message) => (
+							<ChatPill
+								key={message.id}
+								{...message}
+								toBytes={message.toBytes}
+							/>
+						))
+					) : (
+						<div>loading</div>
+					)}
+				</div>
+				<ChatBox />
+			</div>
 		</div>
 	);
 };

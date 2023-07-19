@@ -11,7 +11,11 @@ const Page: NextPageWithLayout = () => {
 	const { activeChat } = React.useContext(ChatContext);
 	return (
 		<div className='flex flex-row w-full'>
-			<ChatList />
+			<div
+				className={`${activeChat !== null ? 'hidden md:flex' : ''} border-2`}
+			>
+				<ChatList />
+			</div>
 			{activeChat && <ChatArea conversation={activeChat} />}
 		</div>
 	);
