@@ -1,29 +1,23 @@
 import { useEffect, useState } from 'react';
-import { useAddress } from '@thirdweb-dev/react';
 
 import { ethers } from 'ethers';
 import { ALCHEMY_API_KEY } from '@/utils';
 
-interface Props {
-	ethAddress?: string;
-}
-
 interface IData {
-	ensName?: string;
-	avatar?: string;
+	address: string;
+	ensName: string;
+	ensAvatar: string;
+	resolver: ethers.providers.Resolver | null;
 }
 
 interface IError {
 	message?: string;
 }
 
-const useEns = ({ ethAddress }: Props) => {
+const useEns = (address: string) => {
 	const [data, setData] = useState<IData>();
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [error, setError] = useState<IError>();
-
-	const address = useAddress();
-	const ethAddr = ethAddress || address;
 
 	let provider = new ethers.providers.AlchemyProvider(
 		'homestead',
@@ -31,18 +25,24 @@ const useEns = ({ ethAddress }: Props) => {
 	);
 
 	useEffect(() => {
-		if (!ethAddress || address) {
+		if (!address) {
 			setIsLoading(false);
 			setError({ message: 'No address provided' });
 		}
-		if (ethAddress) {
+		if (address) {
 			setIsLoading(true);
 			provider
-				?.lookupAddress(ethAddr!)
+				?.lookupAddress(address)
 				.then(async (res) => {
 					if (res) {
+						let resolver = await provider?.getResolver(res);
 						let avatar = await provider?.getAvatar(res);
-						setData({ ensName: res || '', avatar: avatar || '' });
+						setData({
+							address: address,
+							ensName: res,
+							ensAvatar: avatar || '',
+							resolver: resolver || null,
+						});
 					}
 
 					setIsLoading(false);
@@ -53,7 +53,7 @@ const useEns = ({ ethAddress }: Props) => {
 					setIsLoading(false);
 				});
 		}
-	}, [ethAddress]);
+	}, [address]);
 
 	return { data, isLoading, error };
 };
