@@ -1,7 +1,7 @@
 import React from 'react';
 import { Avatar, Button } from 'antd';
 import { CustomConnect } from '@/components';
-
+import { ChatContext } from '../layout/nested-layout';
 import { SidebarItem } from '@/types';
 
 import {
@@ -15,6 +15,7 @@ import logo from '@/public/logo.png';
 import { ISidebarItem } from '@/types';
 
 const Sidebar: React.FC = () => {
+	const { setActiveChat } = React.useContext(ChatContext);
 	const [activeTab, setActiveTab] = React.useState<SidebarItem>('chat');
 
 	const SidebarItems: ISidebarItem[] = [
@@ -56,6 +57,13 @@ const Sidebar: React.FC = () => {
 		},
 	];
 
+	const handleTabChange = (item: ISidebarItem) => {
+		setActiveTab(item.name.toLowerCase() as any);
+		if (item.name.toLowerCase() === 'chat') {
+			setActiveChat(null);
+		}
+	};
+
 	return (
 		<div className='h-screen max-w-[225px] border-r-2 border-[#F6F6F6] p-4 sm:flex flex-col justify-between hidden'>
 			<div>
@@ -73,7 +81,7 @@ const Sidebar: React.FC = () => {
 									? 'text-[#2176FF]'
 									: 'text-[#8f8f8f]'
 							}`}
-							onClick={() => setActiveTab(item.name.toLowerCase() as any)}
+							onClick={() => handleTabChange(item)}
 						>
 							<span className='!hidden xl:!flex'>{item.name}</span>
 						</Button>

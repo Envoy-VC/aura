@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'antd';
 import CustomConnect from './custom-connect';
-
+import { ChatContext } from '../layout/nested-layout';
 import {
 	PiChatsDuotone,
 	PiUsersThreeDuotone,
@@ -13,7 +13,7 @@ import { ISidebarItem, SidebarItem } from '@/types';
 
 const NavbarDrawer = () => {
 	const [activeTab, setActiveTab] = React.useState<SidebarItem>('chat');
-
+	const { setActiveChat } = React.useContext(ChatContext);
 	const SidebarItems: ISidebarItem[] = [
 		{
 			name: 'Chat',
@@ -52,6 +52,13 @@ const NavbarDrawer = () => {
 			),
 		},
 	];
+
+	const handleTabChange = (item: ISidebarItem) => {
+		setActiveTab(item.name.toLowerCase() as any);
+		if (item.name.toLowerCase() === 'chat') {
+			setActiveChat(null);
+		}
+	};
 	return (
 		<div className='flex flex-col gap-3'>
 			{SidebarItems.map((item, index) => (
@@ -64,7 +71,7 @@ const NavbarDrawer = () => {
 							? 'text-[#2176FF]'
 							: 'text-[#8f8f8f]'
 					}`}
-					onClick={() => setActiveTab(item.name.toLowerCase() as any)}
+					onClick={() => handleTabChange(item)}
 				>
 					<span className='flex'>{item.name}</span>
 				</Button>

@@ -30,13 +30,13 @@ const ChatArea = ({ conversation }: Props) => {
 	}, [messages]);
 
 	return (
-		<div className='w-full flex flex-col justify-between items-start h-[92dvh]'>
+		<div className='w-full flex flex-col justify-between items-start h-[92dvh] sm:h-[100vh]'>
 			<div className='flex justify-start'>
 				<ChatHeader data={data!} />
 			</div>
 			<div className='w-full'>
 				<div
-					className='flex flex-col w-full gap-1 p-4 px-8 overflow-y-scroll scrollbar-hide'
+					className='flex flex-col w-full gap-1 p-4 px-2 overflow-y-scroll sm:px-8 scrollbar-hide'
 					ref={chatContainer}
 				>
 					{!isLoading ? (

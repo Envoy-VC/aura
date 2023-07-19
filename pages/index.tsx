@@ -12,7 +12,9 @@ const Page: NextPageWithLayout = () => {
 	return (
 		<div className='flex flex-row w-full'>
 			<div
-				className={`${activeChat !== null ? 'hidden md:flex' : ''} border-2`}
+				className={`${
+					activeChat !== null ? 'hidden md:flex' : ''
+				} w-full sm:w-fit`}
 			>
 				<ChatList />
 			</div>
