@@ -1,8 +1,10 @@
 import React from 'react';
-import { useMessages } from '@xmtp/react-sdk';
-import { ChatBox, ChatPill, ChatHeader } from '@/components';
 import { ChatContext } from '@/components/layout/nested-layout';
-import type { Conversation } from '@xmtp/react-sdk';
+import { useMessages, useStreamMessages } from '@xmtp/react-sdk';
+
+import { ChatBox, ChatPill, ChatHeader } from '@/components';
+
+import type { Conversation, DecodedMessage } from '@xmtp/react-sdk';
 
 interface Props {
 	conversation: Conversation;
@@ -12,6 +14,25 @@ const ChatArea = ({ conversation }: Props) => {
 	const { ensDetails } = React.useContext(ChatContext);
 	const { messages, isLoading } = useMessages(conversation);
 	const chatContainer = React.useRef<HTMLDivElement>(null);
+
+	const [streamedMessages, setStreamedMessages] = React.useState<
+		DecodedMessage[]
+	>([]);
+
+	React.useEffect(() => {
+		if (messages.length > 0) {
+			setStreamedMessages(messages);
+		}
+	}, [messages]);
+
+	const onMessage = React.useCallback(
+		(message: DecodedMessage) => {
+			setStreamedMessages((prev) => [...prev, message]);
+		},
+		[streamedMessages]
+	);
+
+	useStreamMessages(conversation, onMessage);
 
 	let data = ensDetails.find(
 		(item) => item.address === conversation.peerAddress
@@ -27,7 +48,7 @@ const ChatArea = ({ conversation }: Props) => {
 
 	React.useEffect(() => {
 		Scroll();
-	}, [messages]);
+	}, [streamedMessages]);
 
 	return (
 		<div className='w-full flex flex-col justify-between items-start h-[92dvh] sm:h-[100vh]'>
@@ -40,7 +61,7 @@ const ChatArea = ({ conversation }: Props) => {
 					ref={chatContainer}
 				>
 					{!isLoading ? (
-						messages.map((message) => (
+						streamedMessages.map((message) => (
 							<ChatPill
 								key={message.id}
 								{...message}
@@ -51,7 +72,7 @@ const ChatArea = ({ conversation }: Props) => {
 						<div>loading</div>
 					)}
 				</div>
-				<ChatBox />
+				<ChatBox conversation={conversation} />
 			</div>
 		</div>
 	);

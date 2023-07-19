@@ -1,15 +1,31 @@
 import React from 'react';
 import { Input, Button } from 'antd';
+import { useSendMessage } from '@xmtp/react-sdk';
 
 import ChatButtons from '../chat-buttons';
 import { PiTranslateDuotone, PiArrowRightBold } from 'react-icons/pi';
 
-const ChatBox = () => {
-	const [message, setMessage] = React.useState<string>('');
+import type { Conversation } from '@xmtp/react-sdk';
+interface Props {
+	conversation: Conversation;
+}
 
-	const handleSendMessage = (content: string) => {
+const ChatBox = ({ conversation }: Props) => {
+	const [message, setMessage] = React.useState<string>('');
+	const [isSending, setIsSending] = React.useState<boolean>(false);
+	const { sendMessage } = useSendMessage(conversation);
+
+	const handleSendMessage = async (content: string) => {
 		if (!content) return;
-		setMessage('');
+		try {
+			setIsSending(true);
+			await sendMessage(content);
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setMessage('');
+			setIsSending(false);
+		}
 	};
 
 	return (
@@ -30,8 +46,11 @@ const ChatBox = () => {
 			</div>
 			<Button
 				type='primary'
-				className=' bg-[#2176FF] w-fit !py-6 flex items-center flex-row-reverse font-medium'
+				className={`bg-[#2176FF] w-fit !py-6 flex items-center flex-row-reverse font-medium ${
+					isSending ? 'opacity-50' : ''
+				}`}
 				size='large'
+				disabled={isSending}
 				icon={<PiArrowRightBold color='#fff' size={24} className='ml-2' />}
 				onClick={() => handleSendMessage(message)}
 			>
