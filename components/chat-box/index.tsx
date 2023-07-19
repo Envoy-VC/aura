@@ -4,35 +4,11 @@ import { Input, Button } from 'antd';
 import ChatButtons from '../chat-buttons';
 import { PiTranslateDuotone, PiArrowRightBold } from 'react-icons/pi';
 
-import type { IMessage } from '@/types';
-
-interface Props {
-	setMessages: React.Dispatch<React.SetStateAction<IMessage[]>>;
-}
-
-const ChatBox = ({ setMessages }: Props) => {
+const ChatBox = () => {
 	const [message, setMessage] = React.useState<string>('');
-
-	const isRecentMessage = (messages: IMessage[], timestamp: number) => {
-		if (messages.length === 0) return false;
-		else if (timestamp - messages.at(messages.length - 1)!?.timestamp > 10) {
-			return false;
-		} else {
-			return true;
-		}
-	};
 
 	const handleSendMessage = (content: string) => {
 		if (!content) return;
-		setMessages((prev) => [
-			...prev,
-			{
-				message: content,
-				sender: 'me',
-				timestamp: Math.floor(Date.now() / 1000),
-				isRecentMessage: isRecentMessage(prev, Math.floor(Date.now() / 1000)),
-			},
-		]);
 		setMessage('');
 	};
 

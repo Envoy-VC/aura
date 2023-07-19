@@ -1,62 +1,73 @@
 import React from 'react';
-import { Avatar } from 'antd';
-
+import { Avatar, Skeleton } from 'antd';
+import { useAddress } from '@thirdweb-dev/react';
+import { ChatContext } from '../layout/nested-layout';
 import { formatTimestamp } from '@/utils';
 
-import type { IMessage } from '@/types';
+import { PiUserBold } from 'react-icons/pi';
 
-interface ChatPillProps extends IMessage {
-	isRecentMessage: boolean;
+import type { DecodedMessage } from '@xmtp/react-sdk';
+import { useEns } from '@/hooks';
+
+interface ChatPillProps extends DecodedMessage {
+	isRecentMessage?: boolean;
 }
 
-const ChatPill = ({
-	message,
-	sender,
-	timestamp,
-	isRecentMessage,
-}: ChatPillProps) => {
+const ChatPill = ({ content, sent, senderAddress }: ChatPillProps) => {
+	const address = useAddress();
+	const { ensDetails, isLoading } = React.useContext(ChatContext);
+	let data = ensDetails.find((item) => item.address === senderAddress);
 	return (
 		<div
 			className={`flex gap-4 ${
-				sender === 'me' ? 'self-end flex-row-reverse' : 'self-start flex-row'
+				senderAddress === address
+					? 'self-end flex-row-reverse'
+					: 'self-start flex-row'
 			}`}
 		>
-			<div className={`items-start ${isRecentMessage ? 'hidden' : 'flex'}`}>
+			<div className={`items-start flex`}>
 				<Avatar
 					size={{ xs: 36, sm: 36, md: 40, lg: 42, xl: 42, xxl: 42 }}
-					src='https://ipfs.io/ipfs/QmZMY6iuh3dQiSVXBbLbMWcZConzVXqoBXjEeFC22LapkN'
-					className='bg-[#BFBFBF] border-none'
+					src={data?.ensAvatar || <PiUserBold size={32} color='#666666' />}
+					className='!hidden ml-2 xl:!flex'
 				/>
 			</div>
 			<div
 				className={`flex flex-col gap-1 ${
-					sender === 'me' ? 'items-end' : 'items-start'
+					senderAddress === address ? 'items-end' : 'items-start'
 				}`}
 			>
 				<div
-					className={`flex-row gap-2 items-center ${
-						sender === 'me' ? 'flex-row-reverse' : 'flex-row'
-					} ${isRecentMessage ? 'hidden' : 'flex'}`}
+					className={`flex-row gap-2 items-center flex ${
+						senderAddress === address ? 'flex-row-reverse' : 'flex-row'
+					}`}
 				>
 					<div className='font-semibold text-[0.7rem] lg:text-[0.9rem]'>
-						Ricky Smith
+						{isLoading ? (
+							<Skeleton
+								active
+								paragraph={{
+									rows: 0,
+									className: '!m-0 !p-0',
+								}}
+								className='!w-[350px]'
+							/>
+						) : (
+							data?.ensName || senderAddress.slice(0, 4) + '...'
+						)}
 					</div>
 					<div className='text-[#A4A8AE] font-medium lg:text-[0.75rem] text-[0.65rem]'>
-						{formatTimestamp(timestamp)}
+						{formatTimestamp(sent.getDate() / 1000)}
 					</div>
 				</div>
 				<div
 					className={`rounded-xl lg:rounded-2xl py-1 lg:py-3 font-medium text-[1rem] px-2 md:px-4 ${
-						sender === 'me'
+						senderAddress === address
 							? '!rounded-tr-none bg-[#2176FF] text-white text-right w-fit'
 							: 'rounded-tl-none bg-[#F8F8F8]'
-					} ${
-						isRecentMessage
-							? 'mr-[3.6rem] lg:mr-[3.9rem] !rounded-tr-xl lg:rounded-tr-2xl'
-							: ''
 					}`}
 				>
-					{message}
+					{content}
 				</div>
 			</div>
 		</div>

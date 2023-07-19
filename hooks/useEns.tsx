@@ -3,19 +3,14 @@ import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import { ALCHEMY_API_KEY } from '@/utils';
 
-interface IData {
-	address: string;
-	ensName: string;
-	ensAvatar: string;
-	resolver: ethers.providers.Resolver | null;
-}
+import { IENSDetails } from '@/types';
 
 interface IError {
 	message?: string;
 }
 
 const useEns = (address: string) => {
-	const [data, setData] = useState<IData>();
+	const [data, setData] = useState<IENSDetails>();
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [error, setError] = useState<IError>();
 

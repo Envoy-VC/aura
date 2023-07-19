@@ -1,11 +1,15 @@
 import React from 'react';
-
+import { useMessages } from '@xmtp/react-sdk';
 import { ChatBox, ChatPill } from '@/components';
 
-import type { IMessage } from '@/types';
+import type { Conversation, DecodedMessage } from '@xmtp/react-sdk';
 
-const ChatArea = () => {
-	const [messages, setMessages] = React.useState<IMessage[]>([]);
+interface Props {
+	conversation: Conversation;
+}
+
+const ChatArea = ({ conversation }: Props) => {
+	const { error, messages, isLoading } = useMessages(conversation);
 
 	const chatContainer = React.useRef<HTMLDivElement>(null);
 
@@ -27,12 +31,15 @@ const ChatArea = () => {
 				className='flex flex-col w-full gap-1 p-4 px-8 overflow-y-scroll scrollbar-hide'
 				ref={chatContainer}
 			>
-				{messages &&
-					messages.map((message, index) => (
-						<ChatPill key={index} {...message} />
-					))}
+				{!isLoading ? (
+					messages.map((message) => (
+						<ChatPill key={message.id} {...message} toBytes={message.toBytes} />
+					))
+				) : (
+					<div>loading</div>
+				)}
 			</div>
-			<ChatBox setMessages={setMessages} />
+			<ChatBox />
 		</div>
 	);
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import { ethers } from 'ethers';
 
 export type SidebarItem = 'chat' | 'groups' | 'requests' | 'archived';
 
@@ -12,4 +13,11 @@ export interface IMessage {
 	message: string;
 	timestamp: number;
 	isRecentMessage: boolean;
+}
+
+export interface IENSDetails {
+	address: string;
+	ensName: string;
+	ensAvatar: string;
+	resolver: ethers.providers.Resolver | null;
 }

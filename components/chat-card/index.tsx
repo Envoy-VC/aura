@@ -1,10 +1,8 @@
 import React from 'react';
 
 import { Avatar, Button, Skeleton } from 'antd';
-import { useRouter } from 'next/router';
-import { useEns } from '@/hooks';
 import { useMessages } from '@xmtp/react-sdk';
-
+import { ChatContext } from '../layout/nested-layout';
 import { getMessageTime } from '@/utils';
 
 import { PiDotsThreeVerticalBold, PiUserBold } from 'react-icons/pi';
@@ -16,9 +14,10 @@ interface Props {
 }
 
 const ChatCard = ({ conversation, setActiveChat }: Props) => {
-	const { data, error, isLoading } = useEns({
-		ethAddress: conversation?.peerAddress,
-	});
+	const { ensDetails, isLoading } = React.useContext(ChatContext);
+	let data = ensDetails.find(
+		(item) => item.address === conversation?.peerAddress
+	);
 
 	const { messages, isLoading: isMessagesLoading } = useMessages(conversation, {
 		direction: SortDirection.SORT_DIRECTION_DESCENDING,
@@ -42,7 +41,7 @@ const ChatCard = ({ conversation, setActiveChat }: Props) => {
 						<Avatar
 							size={{ xs: 42, sm: 48, md: 48, lg: 48, xl: 48, xxl: 48 }}
 							src={
-								data?.avatar || (
+								data?.ensAvatar || (
 									<PiUserBold
 										size={32}
 										color='#666666'
@@ -83,8 +82,8 @@ const ChatCard = ({ conversation, setActiveChat }: Props) => {
 									}}
 									className='!w-[350px]'
 								/>
-							) : messages.at(0)?.content?.length > 30 ? (
-								messages.at(0)?.content?.slice(0, 30) + '...'
+							) : messages.at(0)?.content?.length > 20 ? (
+								messages.at(0)?.content?.slice(0, 20) + '...'
 							) : (
 								(messages.at(0)?.content as string)
 							)}

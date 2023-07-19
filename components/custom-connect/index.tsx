@@ -2,8 +2,7 @@ import React from 'react';
 import { Avatar, Button, Skeleton } from 'antd';
 import { useAddress, useSigner, useDisconnect } from '@thirdweb-dev/react';
 import { useClient } from '@xmtp/react-sdk';
-
-import { useEns } from '@/hooks';
+import { ChatContext } from '../layout/nested-layout/index';
 
 import { ConnectWalletModal } from '../modal';
 
@@ -19,9 +18,8 @@ const CustomConnect: React.FC = () => {
 	const disconnect = useDisconnect();
 	const signer = useSigner();
 	const { client, initialize } = useClient();
-	const { data, error, isLoading } = useEns({
-		ethAddress: address,
-	});
+	const { ensDetails, isLoading } = React.useContext(ChatContext);
+	let data = ensDetails.find((item) => item.address === address!);
 
 	const [connectWalletModalOpen, setConnectWalletModalOpen] =
 		React.useState<boolean>(false);
@@ -101,7 +99,7 @@ const CustomConnect: React.FC = () => {
 			) : (
 				<Avatar
 					size={32}
-					src={data?.avatar || <PiUserBold size={32} color='#666666' />}
+					src={data?.ensAvatar || <PiUserBold size={32} color='#666666' />}
 					className='!hidden ml-2 xl:!flex'
 				/>
 			)}

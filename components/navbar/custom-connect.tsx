@@ -2,8 +2,7 @@ import React from 'react';
 import { Avatar, Button, Skeleton } from 'antd';
 import { useAddress, useSigner, useDisconnect } from '@thirdweb-dev/react';
 import { useClient } from '@xmtp/react-sdk';
-
-import { useEns } from '@/hooks';
+import { ChatContext } from '../layout/nested-layout';
 
 import { ConnectWalletModal } from '../modal';
 
@@ -11,6 +10,7 @@ import {
 	PiSignOutDuotone,
 	PiTelegramLogoDuotone,
 	PiWalletFill,
+	PiUserBold,
 } from 'react-icons/pi';
 
 const CustomConnect: React.FC = () => {
@@ -18,9 +18,8 @@ const CustomConnect: React.FC = () => {
 	const disconnect = useDisconnect();
 	const signer = useSigner();
 	const { client, initialize } = useClient();
-	const { data, error, isLoading } = useEns({
-		ethAddress: address,
-	});
+	const { ensDetails, isLoading } = React.useContext(ChatContext);
+	let data = ensDetails.find((item) => item.address === address!);
 
 	const [connectWalletModalOpen, setConnectWalletModalOpen] =
 		React.useState<boolean>(false);
@@ -100,11 +99,8 @@ const CustomConnect: React.FC = () => {
 			) : (
 				<Avatar
 					size={36}
-					src={
-						data?.avatar ||
-						'https://ipfs.io/ipfs/QmZMY6iuh3dQiSVXBbLbMWcZConzVXqoBXjEeFC22LapkN'
-					}
-					className='flex'
+					src={data?.ensAvatar || <PiUserBold size={32} color='#666666' />}
+					className='flex ml-2'
 				/>
 			)}
 		</Button>

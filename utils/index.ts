@@ -4,7 +4,6 @@ export const WALLET_CONNECT_PROJECT_ID =
 export const ALCHEMY_API_KEY = process.env.NEXT_PUBLIC_ALCHEMY_API_KEY || '';
 
 export const formatTimestamp = (timestamp: number) => {
-	// convert timestamp in seconds to HH:MM AAM/PM format 12 hour
 	const date = new Date(timestamp * 1000);
 	const hours = date.getHours();
 	const minutes = date.getMinutes();
