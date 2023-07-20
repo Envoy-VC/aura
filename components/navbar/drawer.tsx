@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'antd';
-import CustomConnect from './custom-connect';
+import { CustomConnect } from '@/components';
 import { ChatContext } from '../layout/nested-layout';
 import {
 	PiChatsDuotone,
@@ -78,7 +78,7 @@ const NavbarDrawer = () => {
 			))}
 
 			<div className='pt-2 mt-2 border-t-2 border-[#66666]'>
-				<CustomConnect />
+				<CustomConnect isMobile={true} />
 			</div>
 		</div>
 	);

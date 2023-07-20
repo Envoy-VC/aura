@@ -13,7 +13,11 @@ import {
 	PiUserBold,
 } from 'react-icons/pi';
 
-const CustomConnect: React.FC = () => {
+interface Props {
+	isMobile: boolean;
+}
+
+const CustomConnect = ({ isMobile }: Props) => {
 	const address = useAddress();
 	const disconnect = useDisconnect();
 	const signer = useSigner();
@@ -28,7 +32,6 @@ const CustomConnect: React.FC = () => {
 		try {
 			await initialize({
 				signer,
-
 				options: {
 					env: 'production',
 				},
@@ -55,7 +58,7 @@ const CustomConnect: React.FC = () => {
 					className='flex flex-row-reverse items-center gap-4 py-4 text-lg font-medium text-[#2176FF]'
 					onClick={() => setConnectWalletModalOpen(true)}
 				>
-					<p className='hidden xl:flex'>Connect</p>
+					<p className={`${isMobile ? 'flex' : 'hidden xl:flex'}`}>Connect</p>
 					<PiWalletFill color='#2176FF' size={24} />
 				</Button>
 			</>
@@ -71,7 +74,9 @@ const CustomConnect: React.FC = () => {
 					className='flex flex-row-reverse items-center gap-4 py-4 text-[1rem] font-medium text-[#2176FF]'
 					onClick={init}
 				>
-					<p className='hidden xl:flex'>Initialize</p>
+					<p className={`${isMobile ? 'flex' : 'hidden xl:flex'}`}>
+						Initialize
+					</p>
 					<PiTelegramLogoDuotone color='#2176FF' size={24} />
 				</Button>
 			</>
@@ -82,16 +87,39 @@ const CustomConnect: React.FC = () => {
 		<Button
 			type='ghost'
 			icon={<PiSignOutDuotone color='#666666' size={24} />}
-			className='flex items-center gap-4 text-lg font-medium text-[#8f8f8f] flex-row-reverse'
+			className='flex items-center gap-4 text-[1rem] font-medium text-[#8f8f8f] flex-row-reverse'
 			onClick={handleDisconnect}
 		>
+			{isMobile && (
+				<>
+					{isLoading ? (
+						<Skeleton
+							active
+							paragraph={{
+								rows: 0,
+								className: '!m-0 !p-0',
+								width: 10000,
+							}}
+							title={{
+								width: 100,
+							}}
+							className='!max-w-[100px]'
+						/>
+					) : (
+						<p>
+							{profile?.name ||
+								address!.slice(0, 4) + '...' + address!.slice(-4)}
+						</p>
+					)}
+				</>
+			)}
 			{isLoading ? (
-				<Skeleton.Avatar active={true} size={44} />
+				<Skeleton.Avatar active={true} size={isMobile ? 32 :40 } />
 			) : (
 				<Avatar
-					size={32}
+					size={isMobile ? 32 : 40}
 					src={profile?.avatar || <PiUserBold size={32} color='#666666' />}
-					className='!hidden ml-2 xl:!flex'
+					className={`${isMobile ? 'flex' : 'hidden xl:flex'} object-cover`}
 				/>
 			)}
 		</Button>

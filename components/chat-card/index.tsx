@@ -54,7 +54,7 @@ const ChatCard = ({ conversation, setActiveChat }: Props) => {
 					)}
 				</div>
 				<div className='w-fit'>
-					<p className={`font-semibold text-[1rem] !max-w-[300px]`}>
+					<p className={`font-semibold text-[1rem] !max-w-[200px]`}>
 						{isLoading ? (
 							<Skeleton
 								active
@@ -62,7 +62,10 @@ const ChatCard = ({ conversation, setActiveChat }: Props) => {
 									rows: 0,
 									className: '!m-0 !p-0',
 								}}
-								className='!w-[350px] mb-2'
+								title={{
+									width: 200,
+								}}
+								className='!max-w-[50px] mb-2'
 							/>
 						) : (
 							profile?.name ||
@@ -80,7 +83,10 @@ const ChatCard = ({ conversation, setActiveChat }: Props) => {
 										rows: 0,
 										className: '!m-0 !p-0',
 									}}
-									className='!w-[350px]'
+									title={{
+										width: 150,
+									}}
+									className='!max-w-[50px] !pr-2'
 								/>
 							) : messages.at(0)?.content?.length > 20 ? (
 								messages.at(0)?.content?.slice(0, 20) + '...'
@@ -95,6 +101,9 @@ const ChatCard = ({ conversation, setActiveChat }: Props) => {
 									paragraph={{
 										rows: 0,
 										className: '!m-0 !p-0',
+									}}
+									title={{
+										width: 42,
 									}}
 									className='!w-[50px]'
 								/>

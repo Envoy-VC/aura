@@ -89,7 +89,7 @@ const Sidebar: React.FC = () => {
 				</div>
 			</div>
 			<div className='justify-end mb-4'>
-				<CustomConnect />
+				<CustomConnect isMobile={false} />
 			</div>
 		</div>
 	);
