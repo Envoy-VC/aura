@@ -18,7 +18,7 @@ const CustomConnect: React.FC = () => {
 	const disconnect = useDisconnect();
 	const signer = useSigner();
 	const { client, initialize } = useClient();
-	const { profiles, isLoading } = React.useContext(ChatContext);
+	const { profiles, isLoading, setActiveChat } = React.useContext(ChatContext);
 	let profile = getProfile(profiles, address!);
 
 	const [connectWalletModalOpen, setConnectWalletModalOpen] =
@@ -36,6 +36,11 @@ const CustomConnect: React.FC = () => {
 		} catch (error) {
 			console.log(error);
 		}
+	};
+
+	const handleDisconnect = () => {
+		setActiveChat(null);
+		disconnect();
 	};
 
 	if (!address) {
@@ -78,7 +83,7 @@ const CustomConnect: React.FC = () => {
 			type='ghost'
 			icon={<PiSignOutDuotone color='#666666' size={24} />}
 			className='flex items-center gap-4 text-[1rem] font-medium text-[#8f8f8f] flex-row-reverse mt-3'
-			onClick={disconnect}
+			onClick={handleDisconnect}
 		>
 			<p className='flex'>
 				{isLoading ? (
