@@ -1,5 +1,4 @@
 import React from 'react';
-import { ChatContext } from '@/components/layout/nested-layout';
 import { useMessages, useStreamMessages } from '@xmtp/react-sdk';
 
 import { ChatBox, ChatPill, ChatHeader } from '@/components';
@@ -11,7 +10,6 @@ interface Props {
 }
 
 const ChatArea = ({ conversation }: Props) => {
-	const { profiles } = React.useContext(ChatContext);
 	const { messages, isLoading } = useMessages(conversation);
 	const chatContainer = React.useRef<HTMLDivElement>(null);
 
@@ -35,10 +33,6 @@ const ChatArea = ({ conversation }: Props) => {
 
 	useStreamMessages(conversation, onMessage);
 
-	let data = profiles.find(
-		(profile) => profile.address === conversation.peerAddress
-	);
-
 	const Scroll = () => {
 		const { offsetHeight, scrollHeight, scrollTop } =
 			chatContainer.current as HTMLDivElement;
@@ -54,7 +48,7 @@ const ChatArea = ({ conversation }: Props) => {
 	return (
 		<div className='w-full flex flex-col justify-between items-start h-[92dvh] sm:h-[100vh] '>
 			<div className=''>
-				<ChatHeader data={data!} />
+				<ChatHeader conversation={conversation} />
 			</div>
 			<div className='flex flex-col justify-end w-full h-full overflow-y-scroll scrollbar-hide'>
 				<div
