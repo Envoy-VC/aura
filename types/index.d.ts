@@ -15,9 +15,21 @@ export interface IMessage {
 	isRecentMessage: boolean;
 }
 
-export interface IENSDetails {
+export interface ProfileDetailsType {
 	address: string;
-	ensName: string;
-	ensAvatar: string;
-	resolver: ethers.providers.Resolver | null;
+	domains?: IDomain[];
+	socials?: ISocials[];
+}
+
+export interface IDomain {
+	dappName: string;
+	name: string | null;
+	avatar?: string | null;
+	resolvedAddress: string;
+}
+
+export interface ISocials {
+	dappName: string;
+	name: string | null;
+	avatar?: string | null;
 }

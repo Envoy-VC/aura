@@ -3,7 +3,7 @@ import { Avatar, Button, Skeleton } from 'antd';
 import { useAddress, useSigner, useDisconnect } from '@thirdweb-dev/react';
 import { useClient } from '@xmtp/react-sdk';
 import { ChatContext } from '../layout/nested-layout';
-
+import { getProfile } from '@/services/profile';
 import { ConnectWalletModal } from '../modal';
 
 import {
@@ -18,8 +18,8 @@ const CustomConnect: React.FC = () => {
 	const disconnect = useDisconnect();
 	const signer = useSigner();
 	const { client, initialize } = useClient();
-	const { ensDetails, isLoading } = React.useContext(ChatContext);
-	let data = ensDetails.find((item) => item.address === address!);
+	const { profiles, isLoading } = React.useContext(ChatContext);
+	let profile = getProfile(profiles, address!);
 
 	const [connectWalletModalOpen, setConnectWalletModalOpen] =
 		React.useState<boolean>(false);
@@ -91,7 +91,7 @@ const CustomConnect: React.FC = () => {
 						className='!w-[350px]'
 					/>
 				) : (
-					data?.ensName || address.slice(0, 4) + '...' + address.slice(-4)
+					profile?.name || address.slice(0, 4) + '...' + address.slice(-4)
 				)}
 			</p>
 			{isLoading ? (
@@ -99,7 +99,7 @@ const CustomConnect: React.FC = () => {
 			) : (
 				<Avatar
 					size={36}
-					src={data?.ensAvatar || <PiUserBold size={32} color='#666666' />}
+					src={profile?.avatar || <PiUserBold size={32} color='#666666' />}
 					className='flex ml-2'
 				/>
 			)}

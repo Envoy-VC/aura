@@ -3,6 +3,7 @@ import { Avatar, Button, Skeleton } from 'antd';
 import { useMessages } from '@xmtp/react-sdk';
 import { ChatContext } from '../layout/nested-layout';
 import { getMessageTime } from '@/utils';
+import { getProfile } from '@/services/profile';
 
 import { PiDotsThreeVerticalBold, PiUserBold } from 'react-icons/pi';
 import { Conversation, SortDirection } from '@xmtp/react-sdk';
@@ -13,9 +14,10 @@ interface Props {
 }
 
 const ChatCard = ({ conversation, setActiveChat }: Props) => {
-	const { ensDetails, isLoading } = React.useContext(ChatContext);
-	let data = ensDetails.find(
-		(item) => item.address === conversation?.peerAddress
+	const { profiles, isLoading } = React.useContext(ChatContext);
+	let profile = getProfile(profiles, conversation?.peerAddress);
+	let data = profiles.find(
+		(profile) => profile.address === conversation?.peerAddress
 	);
 
 	const { messages, isLoading: isMessagesLoading } = useMessages(conversation, {
@@ -39,7 +41,7 @@ const ChatCard = ({ conversation, setActiveChat }: Props) => {
 						<Avatar
 							size={{ xs: 42, sm: 48, md: 48, lg: 48, xl: 48, xxl: 48 }}
 							src={
-								data?.ensAvatar || (
+								profile?.avatar || (
 									<PiUserBold
 										size={32}
 										color='#666666'
@@ -63,7 +65,7 @@ const ChatCard = ({ conversation, setActiveChat }: Props) => {
 								className='!w-[350px]'
 							/>
 						) : (
-							data?.ensName ||
+							profile?.name ||
 							conversation?.peerAddress.slice(0, 6) +
 								'...' +
 								conversation?.peerAddress.slice(-4)

@@ -3,8 +3,7 @@ export const WALLET_CONNECT_PROJECT_ID =
 
 export const ALCHEMY_API_KEY = process.env.NEXT_PUBLIC_ALCHEMY_API_KEY || '';
 
-export const formatTimestamp = (timestamp: number) => {
-	const date = new Date(timestamp * 1000);
+export const formatTimestamp = (date: Date) => {
 	const hours = date.getHours();
 	const minutes = date.getMinutes();
 	const ampm = hours >= 12 ? 'PM' : 'AM';

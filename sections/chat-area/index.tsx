@@ -11,7 +11,7 @@ interface Props {
 }
 
 const ChatArea = ({ conversation }: Props) => {
-	const { ensDetails } = React.useContext(ChatContext);
+	const { profiles } = React.useContext(ChatContext);
 	const { messages, isLoading } = useMessages(conversation);
 	const chatContainer = React.useRef<HTMLDivElement>(null);
 
@@ -21,6 +21,7 @@ const ChatArea = ({ conversation }: Props) => {
 
 	React.useEffect(() => {
 		if (messages.length > 0) {
+			console.log(messages.at(0));
 			setStreamedMessages(messages);
 		}
 	}, [messages]);
@@ -34,14 +35,14 @@ const ChatArea = ({ conversation }: Props) => {
 
 	useStreamMessages(conversation, onMessage);
 
-	let data = ensDetails.find(
-		(item) => item.address === conversation.peerAddress
+	let data = profiles.find(
+		(profile) => profile.address === conversation.peerAddress
 	);
 
 	const Scroll = () => {
 		const { offsetHeight, scrollHeight, scrollTop } =
 			chatContainer.current as HTMLDivElement;
-		if (scrollHeight <= scrollTop + offsetHeight + 100) {
+		if (scrollHeight <= scrollTop + offsetHeight + 500) {
 			chatContainer.current?.scrollTo(0, scrollHeight);
 		}
 	};
@@ -51,11 +52,11 @@ const ChatArea = ({ conversation }: Props) => {
 	}, [streamedMessages]);
 
 	return (
-		<div className='w-full flex flex-col justify-between items-start h-[92dvh] sm:h-[100vh]'>
-			<div className='flex justify-start'>
+		<div className='w-full flex flex-col justify-between items-start h-[92dvh] sm:h-[100vh] '>
+			<div className=''>
 				<ChatHeader data={data!} />
 			</div>
-			<div className='w-full'>
+			<div className='flex flex-col justify-end w-full h-full overflow-y-scroll scrollbar-hide'>
 				<div
 					className='flex flex-col w-full gap-1 p-4 px-2 overflow-y-scroll sm:px-8 scrollbar-hide'
 					ref={chatContainer}

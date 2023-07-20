@@ -22,7 +22,7 @@ const ChatBox = ({ conversation }: Props) => {
 			await sendMessage(content);
 		} catch (error) {
 			console.log(error);
-		} finally {
+		} finally {	
 			setMessage('');
 			setIsSending(false);
 		}

@@ -3,11 +3,11 @@ import { Avatar, Skeleton } from 'antd';
 import { useAddress } from '@thirdweb-dev/react';
 import { ChatContext } from '../layout/nested-layout';
 import { formatTimestamp } from '@/utils';
+import { getProfile } from '@/services/profile';
 
 import { PiUserBold } from 'react-icons/pi';
 
 import type { DecodedMessage } from '@xmtp/react-sdk';
-import { useEns } from '@/hooks';
 
 interface ChatPillProps extends DecodedMessage {
 	isRecentMessage?: boolean;
@@ -15,8 +15,8 @@ interface ChatPillProps extends DecodedMessage {
 
 const ChatPill = ({ content, sent, senderAddress }: ChatPillProps) => {
 	const address = useAddress();
-	const { ensDetails, isLoading } = React.useContext(ChatContext);
-	let data = ensDetails.find((item) => item.address === senderAddress);
+	const { profiles, isLoading } = React.useContext(ChatContext);
+	let profile = getProfile(profiles, senderAddress);
 	return (
 		<div
 			className={`flex gap-4 ${
@@ -28,7 +28,7 @@ const ChatPill = ({ content, sent, senderAddress }: ChatPillProps) => {
 			<div className={`items-start flex`}>
 				<Avatar
 					size={{ xs: 36, sm: 36, md: 40, lg: 42, xl: 42, xxl: 42 }}
-					src={data?.ensAvatar || <PiUserBold size={32} color='#666666' />}
+					src={profile?.avatar || <PiUserBold size={32} color='#666666' />}
 					className='flex ml-2'
 				/>
 			</div>
@@ -53,11 +53,11 @@ const ChatPill = ({ content, sent, senderAddress }: ChatPillProps) => {
 								className='!w-[350px]'
 							/>
 						) : (
-							data?.ensName || senderAddress.slice(0, 4) + '...'
+							profile?.name || senderAddress.slice(0, 4) + '...'
 						)}
 					</div>
 					<div className='text-[#A4A8AE] font-medium lg:text-[0.75rem] text-[0.65rem]'>
-						{formatTimestamp(sent.getDate() / 1000)}
+						{formatTimestamp(sent)}
 					</div>
 				</div>
 				<div

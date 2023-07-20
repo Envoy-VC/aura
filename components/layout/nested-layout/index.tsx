@@ -1,17 +1,16 @@
 import React from 'react';
-import { ethers } from 'ethers';
 import { Conversation, useConversations } from '@xmtp/react-sdk';
 import { Sidebar, Navbar } from '@/components';
 
-import { IENSDetails } from '@/types';
+import { getENSProfile, getLensProfile } from '@/services/profile';
 
-import { ALCHEMY_API_KEY } from '@/utils';
+import { ProfileDetailsType } from '@/types';
 
 interface IChatContext {
 	conversations: Conversation[];
 	activeChat: Conversation | null;
 	setActiveChat: React.Dispatch<React.SetStateAction<Conversation | null>>;
-	ensDetails: IENSDetails[];
+	profiles: ProfileDetailsType[];
 	isLoading: boolean;
 }
 
@@ -19,7 +18,7 @@ export const ChatContext = React.createContext<IChatContext>({
 	conversations: [],
 	activeChat: null,
 	setActiveChat: () => {},
-	ensDetails: [],
+	profiles: [],
 	isLoading: true,
 });
 
@@ -30,66 +29,45 @@ interface Props {
 const NestedLayout = ({ children }: Props) => {
 	const { conversations } = useConversations();
 	const [activeChat, setActiveChat] = React.useState<Conversation | null>(null);
-	const [ensDetails, setEnsDetails] = React.useState<IENSDetails[]>([]);
+	const [profiles, setProfiles] = React.useState<ProfileDetailsType[]>([]);
 	const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
-	let provider = new ethers.providers.AlchemyProvider(
-		'homestead',
-		ALCHEMY_API_KEY
-	);
-
 	React.useEffect(() => {
-		const fetchEnsDetails = async (ethAddress: string) => {
-			let data: IENSDetails;
-			let ensName = await provider?.lookupAddress(ethAddress);
-			if (ensName !== null) {
-				let resolver = await provider?.getResolver(ensName);
-				let avatar = await provider?.getAvatar(ensName);
-				data = {
-					address: ethAddress,
-					ensName: ensName || '',
-					ensAvatar: avatar || '',
-					resolver: resolver || null,
-				};
-			} else {
-				data = {
-					address: ethAddress,
-					ensName: '',
-					ensAvatar: '',
-					resolver: null,
-				};
-			}
-			return data;
-		};
 		const resolve = async () => {
 			try {
 				setIsLoading(true);
+				let profiles: ProfileDetailsType[] = [];
 				if (conversations.length > 0) {
-					let ensDetails: IENSDetails[] = [];
-					let promises = conversations.map(async (conversation) => {
-						let peerAddress = conversation.peerAddress;
-						let clientAddress = conversation.clientAddress;
-						let peerAddressDetails = ensDetails.find(
-							(ensDetail) => ensDetail.address === peerAddress
-						);
-						let clientEnsDetails = ensDetails.find(
-							(ensDetail) => ensDetail.address === clientAddress
-						);
-						if (!clientEnsDetails) {
-							let clientEnsDetails = await fetchEnsDetails(clientAddress);
-							console.log(clientEnsDetails);
-							ensDetails.push(clientEnsDetails);
-						}
-						if (!peerAddressDetails) {
-							let peerAddressDetails = await fetchEnsDetails(peerAddress);
-							console.log(peerAddressDetails);
-							ensDetails.push(peerAddressDetails);
-						}
+					// Create Profiles with conversations
+					profiles.push({
+						address: conversations.at(0)!.clientAddress,
+						domains: [],
+						socials: [],
+					});
+					conversations.map((conversation) => {
+						profiles.push({
+							address: conversation?.peerAddress,
+							domains: [],
+							socials: [],
+						});
+					});
+
+					// Fetch ENS Details and Lens Profiles
+					let promises = profiles.map(async (profile) => {
+						let peerAddress = profile.address;
+						let peerProfile = profiles
+							.filter((profile) => profile.address === peerAddress)
+							.at(0);
+						let ensProfile = await getENSProfile(peerAddress);
+						let lensProfile = await getLensProfile(peerAddress);
+						console.log(lensProfile);
+						peerProfile!.domains!.push(ensProfile);
+						peerProfile!.socials!.push(lensProfile);
 					});
 
 					Promise.all(promises).then(() => {
 						setIsLoading(false);
-						setEnsDetails(ensDetails);
+						setProfiles(profiles);
 					});
 				}
 			} catch (error) {
@@ -106,7 +84,7 @@ const NestedLayout = ({ children }: Props) => {
 				conversations,
 				activeChat,
 				setActiveChat,
-				ensDetails,
+				profiles,
 				isLoading,
 			}}
 		>
