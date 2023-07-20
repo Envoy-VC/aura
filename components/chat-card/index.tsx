@@ -62,7 +62,7 @@ const ChatCard = ({ conversation, setActiveChat }: Props) => {
 									rows: 0,
 									className: '!m-0 !p-0',
 								}}
-								className='!w-[350px]'
+								className='!w-[350px] mb-2'
 							/>
 						) : (
 							profile?.name ||
@@ -73,7 +73,7 @@ const ChatCard = ({ conversation, setActiveChat }: Props) => {
 					</p>
 					<div className='text-[#A4A8AE] font-medium text-[0.75rem] flex flex-row'>
 						<div>
-							{isMessagesLoading ? (
+							{isLoading ? (
 								<Skeleton
 									active
 									paragraph={{
@@ -89,7 +89,20 @@ const ChatCard = ({ conversation, setActiveChat }: Props) => {
 							)}
 						</div>
 						<div>
-							• {getMessageTime(messages?.at(0)?.sent.getTime()! / 1000)}
+							{isLoading ? (
+								<Skeleton
+									active
+									paragraph={{
+										rows: 0,
+										className: '!m-0 !p-0',
+									}}
+									className='!w-[50px]'
+								/>
+							) : (
+								<p>
+									• {getMessageTime(messages?.at(0)?.sent.getTime()! / 1000)}
+								</p>
+							)}
 						</div>
 					</div>
 				</div>
