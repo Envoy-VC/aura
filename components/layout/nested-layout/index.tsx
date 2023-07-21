@@ -1,5 +1,9 @@
 import React from 'react';
-import { Conversation, useConversations } from '@xmtp/react-sdk';
+import {
+	Conversation,
+	useConversations,
+	useStreamConversations,
+} from '@xmtp/react-sdk';
 import { Sidebar, Navbar } from '@/components';
 
 import { getENSProfile, getLensProfile } from '@/services/profile';
@@ -28,14 +32,38 @@ interface Props {
 
 const NestedLayout = ({ children }: Props) => {
 	const { conversations } = useConversations();
+	const [streamedConversations, setStreamedConversations] = React.useState<
+		Conversation[]
+	>([]);
 	const [activeChat, setActiveChat] = React.useState<Conversation | null>(null);
 	const [profiles, setProfiles] = React.useState<ProfileDetailsType[]>([]);
 	const [isLoading, setIsLoading] = React.useState<boolean>(true);
+
+	const onConversation = React.useCallback(
+		async (conversation: Conversation) => {
+			let profile: ProfileDetailsType = { address: conversation?.peerAddress };
+			let ensProfile = await getENSProfile(conversation?.peerAddress);
+			let lensProfile = await getLensProfile(conversation?.peerAddress);
+			setProfiles((prev) => [
+				...prev,
+				{
+					address: conversation?.peerAddress,
+					domains: [ensProfile],
+					socials: [lensProfile],
+				},
+			]);
+			setStreamedConversations((prev) => [...prev, conversation]);
+		},
+		[]
+	);
+
+	const streamConversations = useStreamConversations(onConversation);
 
 	React.useEffect(() => {
 		const resolve = async () => {
 			try {
 				setIsLoading(true);
+				setStreamedConversations(conversations);
 				let profiles: ProfileDetailsType[] = [];
 				if (conversations.length > 0) {
 					// Create Profiles with conversations
@@ -80,7 +108,7 @@ const NestedLayout = ({ children }: Props) => {
 	return (
 		<ChatContext.Provider
 			value={{
-				conversations,
+				conversations: streamedConversations,
 				activeChat,
 				setActiveChat,
 				profiles,
