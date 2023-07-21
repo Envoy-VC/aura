@@ -1,11 +1,12 @@
 import React from 'react';
-import { Input, Button } from 'antd';
+import { ChatContext } from '../layout/nested-layout';
 import { Conversation, useClient } from '@xmtp/react-sdk';
 import { useAddress } from '@thirdweb-dev/react';
-import { ChatContext } from '../layout/nested-layout';
-import ChatCard from '../chat-card';
+import { Input, Button } from 'antd';
 
-import { PiMagnifyingGlassDuotone, PiPlusCircleDuotone } from 'react-icons/pi';
+import { ChatCard, CreateConversation } from '@/components';
+
+import { PiMagnifyingGlassDuotone } from 'react-icons/pi';
 
 export interface ChatProps {
 	conversations: Conversation[];
@@ -54,9 +55,7 @@ const ChatList = () => {
 		<div className='h-screen border-r-2 border-[#F6F6F6] flex flex-col justify-start items-center py-4 px-1 gap-6 w-full md:w-[300px] lg:w-[400px]'>
 			<div className='flex flex-row items-center justify-between w-full px-4 mx-4 mt-6 text-2xl font-semibold text-black'>
 				<p>Chats</p>
-				<Button type='ghost' size='middle' className='p-[0px] animate-none'>
-					<PiPlusCircleDuotone color='#666666' size={32} />
-				</Button>
+				<CreateConversation />
 			</div>
 			<div className='w-full px-2'>
 				<Input

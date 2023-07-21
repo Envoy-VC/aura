@@ -60,7 +60,6 @@ const NestedLayout = ({ children }: Props) => {
 							.at(0);
 						let ensProfile = await getENSProfile(peerAddress);
 						let lensProfile = await getLensProfile(peerAddress);
-						console.log(lensProfile);
 						peerProfile!.domains!.push(ensProfile);
 						peerProfile!.socials!.push(lensProfile);
 					});

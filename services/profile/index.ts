@@ -37,6 +37,7 @@ const lensQuery = (address: string) => {
     ethereumAddress:"${address}"
   }) {
     handle
+	ownedBy
     picture {
       ... on NftImage {
         uri
@@ -73,6 +74,7 @@ export const getLensProfile = async (address: string) => {
 			dappName: 'lens',
 			name: res?.data?.defaultProfile?.handle || '',
 			avatar: picture?.original?.url || picture?.optimized?.url || '',
+			ownedBy: address,
 		};
 		return data;
 	} else {
@@ -80,6 +82,7 @@ export const getLensProfile = async (address: string) => {
 			dappName: 'lens',
 			name: null,
 			avatar: null,
+			ownedBy: '',
 		};
 		return data;
 	}

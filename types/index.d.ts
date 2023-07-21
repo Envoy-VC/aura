@@ -32,4 +32,5 @@ export interface ISocials {
 	dappName: string;
 	name: string | null;
 	avatar?: string | null;
+	ownedBy: string;
 }
