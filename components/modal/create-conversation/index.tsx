@@ -70,7 +70,7 @@ const CreateConversationModal = ({ modalOpen, setModalOpen }: Props) => {
 			<div className='mt-6'>
 				<Input
 					addonAfter={<PiMagnifyingGlassBold size={24} color='#666666' />}
-					placeholder='Search any (0x Wallet) to message... '
+					placeholder='Search any 0x Wallet, ENS or Lens Handle to message...'
 					size='middle'
 					onChange={(e) => handleValueChange(e.target.value)}
 					status={error ? 'error' : ''}
