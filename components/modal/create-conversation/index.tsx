@@ -4,6 +4,8 @@ import { ethers } from 'ethers';
 import { Modal, Input } from 'antd';
 import { useDebounce } from '@/hooks';
 
+import { resolveLensHandle, resolveENSName } from '@/services/profile';
+
 import ChatCard from './chat-card';
 import { PiEnvelopeSimpleDuotone, PiMagnifyingGlassBold } from 'react-icons/pi';
 
@@ -25,9 +27,24 @@ const CreateConversationModal = ({ modalOpen, setModalOpen }: Props) => {
 		}
 	};
 
-	const handleValueChange = (value: string) => {
-		isValidEthAddress(value);
-		setValue(value);
+	const handleValueChange = async (value: string) => {
+		if (value.endsWith('.lens')) {
+			let address = await resolveLensHandle(value);
+			if (address !== null) {
+				setError(false);
+				setValue(address);
+			}
+		} else if (value.endsWith('.eth')) {
+			setError(false);
+			let address = await resolveENSName(value);
+			if (address !== null) {
+				setError(false);
+				setValue(address);
+			}
+		} else {
+			isValidEthAddress(value);
+			setValue(value);
+		}
 	};
 
 	React.useEffect(() => {

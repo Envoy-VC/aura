@@ -102,3 +102,31 @@ export const getProfile = (profiles: ProfileDetailsType[], address: string) => {
 
 	return { name, avatar };
 };
+
+export const resolveLensHandle = async (handle: string) => {
+	const query = `
+		query getProfile {
+			profile(request: { handle: "${handle}" }) {
+				ownedBy
+			}
+		}`;
+
+	const res = await fetch('https://api.lens.dev/', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({ query: query, variables: {} }),
+	}).then((res) => res.json());
+
+	if (res?.data?.profile !== null) {
+		return res?.data?.profile?.ownedBy;
+	} else {
+		return null;
+	}
+};
+
+export const resolveENSName = async (name: string) => {
+	let address = await provider?.resolveName(name);
+	return address;
+};
