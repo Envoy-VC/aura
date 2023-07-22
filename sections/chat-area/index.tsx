@@ -10,7 +10,7 @@ interface Props {
 }
 
 const ChatArea = ({ conversation }: Props) => {
-	const { messages, isLoading } = useMessages(conversation);
+	const { messages, isLoading, error } = useMessages(conversation);
 	const chatContainer = React.useRef<HTMLDivElement>(null);
 
 	const [streamedMessages, setStreamedMessages] = React.useState<
@@ -19,7 +19,6 @@ const ChatArea = ({ conversation }: Props) => {
 
 	React.useEffect(() => {
 		if (messages.length > 0) {
-			console.log(messages.at(0));
 			setStreamedMessages(messages);
 		}
 	}, [messages]);
@@ -36,9 +35,7 @@ const ChatArea = ({ conversation }: Props) => {
 	const Scroll = () => {
 		const { offsetHeight, scrollHeight, scrollTop } =
 			chatContainer.current as HTMLDivElement;
-		if (scrollHeight <= scrollTop + offsetHeight + 500) {
-			chatContainer.current?.scrollTo(0, scrollHeight);
-		}
+		chatContainer.current?.scrollTo(0, scrollHeight);
 	};
 
 	React.useEffect(() => {
@@ -55,7 +52,7 @@ const ChatArea = ({ conversation }: Props) => {
 					className='flex flex-col w-full gap-1 p-4 px-2 overflow-y-scroll sm:px-8 scrollbar-hide'
 					ref={chatContainer}
 				>
-					{!isLoading ? (
+					{!isLoading && !error ? (
 						streamedMessages.map((message) => (
 							<ChatPill
 								key={message.id}
@@ -64,7 +61,15 @@ const ChatArea = ({ conversation }: Props) => {
 							/>
 						))
 					) : (
-						<div>loading</div>
+						<>
+							{error ? (
+								<div className='mt-2 text-[#FF4D4F] text-[1rem]'>
+									Error fetching Messages
+								</div>
+							) : (
+								<div>loading</div>
+							)}
+						</>
 					)}
 				</div>
 				<ChatBox conversation={conversation} />
