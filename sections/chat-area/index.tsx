@@ -1,31 +1,44 @@
 import React from 'react';
 import { useMessages, useStreamMessages } from '@xmtp/react-sdk';
-
+import { useAddress } from '@thirdweb-dev/react';
 import { ChatBox, ChatPill, ChatHeader } from '@/components';
 
 import type { Conversation, DecodedMessage } from '@xmtp/react-sdk';
+import { CustomDecodedMessage } from '@/types';
 
 interface Props {
 	conversation: Conversation;
 }
 
 const ChatArea = ({ conversation }: Props) => {
+	const address = useAddress();
 	const { messages, isLoading, error } = useMessages(conversation);
 	const chatContainer = React.useRef<HTMLDivElement>(null);
 
 	const [streamedMessages, setStreamedMessages] = React.useState<
-		DecodedMessage[]
+		CustomDecodedMessage[]
 	>([]);
 
 	React.useEffect(() => {
 		if (messages.length > 0) {
-			setStreamedMessages(messages);
+			let chats: CustomDecodedMessage[] = [];
+			messages.map((message) => chats.push({ ...message, isSent: true }));
+			setStreamedMessages(chats);
 		}
 	}, [messages]);
 
 	const onMessage = React.useCallback(
-		(message: DecodedMessage) => {
-			setStreamedMessages((prev) => [...prev, message]);
+		async (message: DecodedMessage) => {
+			let conversations = streamedMessages;
+			let msg = conversations.find(
+				(ele) => ele.id === message.id && ele.senderAddress === address
+			);
+			if (msg !== undefined) {
+				msg.isSent = true;
+				setStreamedMessages(conversations);
+			} else {
+				setStreamedMessages((prev) => [...prev, { ...message, isSent: true }]);
+			}
 		},
 		[streamedMessages]
 	);
@@ -54,11 +67,7 @@ const ChatArea = ({ conversation }: Props) => {
 				>
 					{!isLoading && !error ? (
 						streamedMessages.map((message) => (
-							<ChatPill
-								key={message.id}
-								{...message}
-								toBytes={message.toBytes}
-							/>
+							<ChatPill key={message.id} {...message} />
 						))
 					) : (
 						<>
@@ -72,7 +81,11 @@ const ChatArea = ({ conversation }: Props) => {
 						</>
 					)}
 				</div>
-				<ChatBox conversation={conversation} />
+				<ChatBox
+					conversation={conversation}
+					streamedConversations={streamedMessages}
+					setStreamedConversations={setStreamedMessages}
+				/>
 			</div>
 		</div>
 	);
