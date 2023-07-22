@@ -1,6 +1,5 @@
 import React from 'react';
 import { ethers } from 'ethers';
-
 export type SidebarItem = 'chat' | 'groups' | 'requests' | 'archived';
 
 export interface ISidebarItem {

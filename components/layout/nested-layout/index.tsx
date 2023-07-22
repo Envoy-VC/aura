@@ -3,7 +3,9 @@ import {
 	Conversation,
 	useConversations,
 	useStreamConversations,
+	Client,
 } from '@xmtp/react-sdk';
+
 import { Sidebar, Navbar } from '@/components';
 
 import { getENSProfile, getLensProfile } from '@/services/profile';
@@ -14,6 +16,8 @@ interface IChatContext {
 	conversations: Conversation[];
 	activeChat: Conversation | null;
 	setActiveChat: React.Dispatch<React.SetStateAction<Conversation | null>>;
+	client: Client | null;
+	setClient: React.Dispatch<React.SetStateAction<Client | null>>;
 	profiles: ProfileDetailsType[];
 	isLoading: boolean;
 }
@@ -22,6 +26,8 @@ export const ChatContext = React.createContext<IChatContext>({
 	conversations: [],
 	activeChat: null,
 	setActiveChat: () => {},
+	client: null,
+	setClient: () => {},
 	profiles: [],
 	isLoading: true,
 });
@@ -35,6 +41,7 @@ const NestedLayout = ({ children }: Props) => {
 	const [streamedConversations, setStreamedConversations] = React.useState<
 		Conversation[]
 	>([]);
+	const [client, setClient] = React.useState<Client | null>(null);
 	const [activeChat, setActiveChat] = React.useState<Conversation | null>(null);
 	const [profiles, setProfiles] = React.useState<ProfileDetailsType[]>([]);
 	const [isLoading, setIsLoading] = React.useState<boolean>(true);
@@ -111,6 +118,8 @@ const NestedLayout = ({ children }: Props) => {
 				conversations: streamedConversations,
 				activeChat,
 				setActiveChat,
+				client,
+				setClient,
 				profiles,
 				isLoading,
 			}}

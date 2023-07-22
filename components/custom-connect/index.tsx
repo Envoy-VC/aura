@@ -2,6 +2,10 @@ import React from 'react';
 import { Avatar, Button, Skeleton } from 'antd';
 import { useAddress, useSigner, useDisconnect } from '@thirdweb-dev/react';
 import { useClient } from '@xmtp/react-sdk';
+import {
+	AttachmentCodec,
+	RemoteAttachmentCodec,
+} from '@xmtp/content-type-remote-attachment';
 import { ChatContext } from '../layout/nested-layout/index';
 import { getProfile } from '@/services/profile';
 import { ConnectWalletModal } from '../modal';
@@ -30,12 +34,14 @@ const CustomConnect = ({ isMobile }: Props) => {
 
 	const init = async () => {
 		try {
-			await initialize({
+			let client = await initialize({
 				signer,
 				options: {
 					env: 'dev',
 				},
 			});
+			client!.registerCodec(new AttachmentCodec());
+			client!.registerCodec(new RemoteAttachmentCodec());
 		} catch (error) {
 			console.log(error);
 		}
