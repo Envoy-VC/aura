@@ -16,30 +16,43 @@ interface Props {
 
 const CreateConversationModal = ({ modalOpen, setModalOpen }: Props) => {
 	const [value, setValue] = React.useState<string>('');
+	const [isLoading, setIsLoading] = React.useState<boolean>(true);
 	const [error, setError] = React.useState<boolean>(false);
-	const debouncedValue = useDebounce<string>(value, 1000);
+	const debouncedValue = useDebounce<string>(value, 500);
 
 	const isValidEthAddress = (address: string) => {
+		setIsLoading(true);
 		if (!ethers.utils.isAddress(address)) {
 			setError(true);
 		} else {
 			setError(false);
 		}
+		setIsLoading(false);
 	};
 
 	const handleValueChange = async (value: string) => {
 		if (value.endsWith('.lens')) {
+			setIsLoading(true);
 			let address = await resolveLensHandle(value);
+			console.log(address);
+			setIsLoading(false);
 			if (address !== null) {
 				setError(false);
 				setValue(address);
+			} else {
+				setError(true);
 			}
 		} else if (value.endsWith('.eth')) {
 			setError(false);
+			setIsLoading(true);
 			let address = await resolveENSName(value);
+			console.log(address);
+			setIsLoading(false);
 			if (address !== null) {
 				setError(false);
 				setValue(address);
+			} else {
+				setError(true);
 			}
 		} else {
 			isValidEthAddress(value);
@@ -78,6 +91,11 @@ const CreateConversationModal = ({ modalOpen, setModalOpen }: Props) => {
 				{debouncedValue && !error && (
 					<div className='mt-2'>
 						<ChatCard value={debouncedValue} />
+					</div>
+				)}
+				{!isLoading && error && (
+					<div className='mt-2 text-[#FF4D4F] text-[0.95rem]'>
+						No Profile Found
 					</div>
 				)}
 			</div>

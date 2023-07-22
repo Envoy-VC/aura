@@ -1,5 +1,5 @@
 import React from 'react';
-import { useStartConversation } from '@xmtp/react-sdk';
+import { useStartConversation, useCanMessage } from '@xmtp/react-sdk';
 import { Skeleton, Avatar, Button, Input, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
@@ -16,6 +16,7 @@ interface Props {
 const ChatCard = ({ value }: Props) => {
 	const { conversations } = React.useContext(ChatContext);
 	const { startConversation } = useStartConversation();
+	const { canMessage } = useCanMessage();
 
 	const [profile, setProfile] = React.useState<ProfileDetailsType>({
 		address: '',
@@ -51,9 +52,10 @@ const ChatCard = ({ value }: Props) => {
 					domains: [ensProfile],
 					socials: [lensProfile],
 				});
-				setIsLoading(false);
 			} catch (error) {
 				console.log(error);
+			} finally {
+				setIsLoading(false);
 			}
 		}
 		resolveProfiles(value);
@@ -65,17 +67,32 @@ const ChatCard = ({ value }: Props) => {
 		);
 
 		if (chat.length === 0) return false;
-		else return true;
+		else {
+			setError('Conversation already exists');
+			return true;
+		}
+	};
+
+	const checkCanMessage = async () => {
+		let res = await canMessage(value);
+		if (!res) {
+			setError(
+				`${
+					getProfile(profile)?.name ||
+					value.slice(0, 4) + '...' + value.slice(-4)
+				} is not on XMTP Network`
+			);
+		}
+		return res;
 	};
 
 	const handleStartConversation = async () => {
 		try {
 			setIsSending(true);
 			const existingConversation = isExistingConversation(value);
-			if (existingConversation) {
-				setError('Conversation already exists');
-				return;
-			}
+			if (existingConversation) return;
+			const canMessage = await checkCanMessage();
+			if (!canMessage) return;
 			if (!message) {
 				setError('Message cannot be empty');
 				return;
