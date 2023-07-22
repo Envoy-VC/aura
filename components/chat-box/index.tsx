@@ -1,27 +1,18 @@
 import React from 'react';
-import { useAddress } from '@thirdweb-dev/react';
-import { Input, Button, Spin } from 'antd';
 import { useSendMessage } from '@xmtp/react-sdk';
+
+import { Input, Button, Spin } from 'antd';
 import ChatButtons from '../chat-buttons';
-import { PiTranslateDuotone, PiArrowRightBold } from 'react-icons/pi';
+
+import { PiArrowRightBold } from 'react-icons/pi';
 import { LoadingOutlined } from '@ant-design/icons';
 
 import type { Conversation } from '@xmtp/react-sdk';
-import { CustomDecodedMessage } from '../../types/index';
 interface Props {
 	conversation: Conversation;
-	streamedConversations: CustomDecodedMessage[];
-	setStreamedConversations: React.Dispatch<
-		React.SetStateAction<CustomDecodedMessage[]>
-	>;
 }
 
-const ChatBox = ({
-	conversation,
-	streamedConversations,
-	setStreamedConversations,
-}: Props) => {
-	const address = useAddress();
+const ChatBox = ({ conversation }: Props) => {
 	const [message, setMessage] = React.useState<string>('');
 	const [isSending, setIsSending] = React.useState<boolean>(false);
 	const { sendMessage } = useSendMessage(conversation);
@@ -30,24 +21,12 @@ const ChatBox = ({
 		if (!content) return;
 		try {
 			setIsSending(true);
-			let message = await conversation?.prepareMessage(content);
-			let id = await message.messageID();
-			setStreamedConversations([
-				...streamedConversations,
-				{
-					id: id,
-					content: content,
-					senderAddress: address!,
-					sent: new Date(),
-					isSent: false,
-				},
-			]);
-			await message.send();
+			await sendMessage(content);
 		} catch (error) {
 			console.log(error);
 		} finally {
-			setMessage('');
 			setIsSending(false);
+			setMessage('');
 		}
 	};
 

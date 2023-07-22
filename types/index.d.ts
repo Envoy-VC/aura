@@ -1,6 +1,5 @@
 import React from 'react';
 import { ethers } from 'ethers';
-import type { DecodedMessage } from '@xmtp/react-sdk';
 
 export type SidebarItem = 'chat' | 'groups' | 'requests' | 'archived';
 
@@ -34,12 +33,4 @@ export interface ISocials {
 	name: string | null;
 	avatar?: string | null;
 	ownedBy: string;
-}
-
-export interface CustomDecodedMessage {
-	id: string;
-	content: any;
-	sent: Date;
-	senderAddress: string;
-	isSent?: boolean;
 }

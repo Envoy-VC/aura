@@ -33,9 +33,9 @@ const CustomConnect = ({ isMobile }: Props) => {
 			await initialize({
 				signer,
 				options: {
-					env: 'production',
+					env: 'dev',
 				},
-			}).then((res) => console.log(res));
+			});
 		} catch (error) {
 			console.log(error);
 		}
@@ -114,7 +114,7 @@ const CustomConnect = ({ isMobile }: Props) => {
 				</>
 			)}
 			{isLoading ? (
-				<Skeleton.Avatar active={true} size={isMobile ? 32 :40 } />
+				<Skeleton.Avatar active={true} size={isMobile ? 32 : 40} />
 			) : (
 				<Avatar
 					size={isMobile ? 32 : 40}

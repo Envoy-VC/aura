@@ -5,7 +5,6 @@ import { useAddress } from '@thirdweb-dev/react';
 import { ChatBox, ChatPill, SkeletonChatPill, ChatHeader } from '@/components';
 
 import type { Conversation, DecodedMessage } from '@xmtp/react-sdk';
-import { CustomDecodedMessage } from '@/types';
 
 interface Props {
 	conversation: Conversation;
@@ -17,29 +16,18 @@ const ChatArea = ({ conversation }: Props) => {
 	const chatContainer = React.useRef<HTMLDivElement>(null);
 
 	const [streamedMessages, setStreamedMessages] = React.useState<
-		CustomDecodedMessage[]
+		DecodedMessage[]
 	>([]);
 
 	React.useEffect(() => {
 		if (messages.length > 0) {
-			let chats: CustomDecodedMessage[] = [];
-			messages.map((message) => chats.push({ ...message, isSent: true }));
-			setStreamedMessages(chats);
+			setStreamedMessages(messages);
 		}
 	}, [messages]);
 
 	const onMessage = React.useCallback(
 		async (message: DecodedMessage) => {
-			let conversations = streamedMessages;
-			let msg = conversations.find(
-				(ele) => ele.id === message.id && ele.senderAddress === address
-			);
-			if (msg !== undefined) {
-				msg.isSent = true;
-				setStreamedMessages(conversations);
-			} else {
-				setStreamedMessages((prev) => [...prev, { ...message, isSent: true }]);
-			}
+			setStreamedMessages((prev) => [...prev, message]);
 		},
 		[streamedMessages]
 	);
@@ -67,7 +55,11 @@ const ChatArea = ({ conversation }: Props) => {
 				>
 					{!isLoading && !error ? (
 						streamedMessages.map((message) => (
-							<ChatPill key={message.id} {...message} />
+							<ChatPill
+								key={message.id}
+								{...message}
+								toBytes={message.toBytes}
+							/>
 						))
 					) : (
 						<>
@@ -85,11 +77,7 @@ const ChatArea = ({ conversation }: Props) => {
 						</>
 					)}
 				</div>
-				<ChatBox
-					conversation={conversation}
-					streamedConversations={streamedMessages}
-					setStreamedConversations={setStreamedMessages}
-				/>
+				<ChatBox conversation={conversation} />
 			</div>
 		</div>
 	);
