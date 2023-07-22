@@ -1,7 +1,8 @@
 import React from 'react';
 import { useMessages, useStreamMessages } from '@xmtp/react-sdk';
 import { useAddress } from '@thirdweb-dev/react';
-import { ChatBox, ChatPill, ChatHeader } from '@/components';
+
+import { ChatBox, ChatPill, SkeletonChatPill, ChatHeader } from '@/components';
 
 import type { Conversation, DecodedMessage } from '@xmtp/react-sdk';
 import { CustomDecodedMessage } from '@/types';
@@ -57,9 +58,8 @@ const ChatArea = ({ conversation }: Props) => {
 
 	return (
 		<div className='w-full flex flex-col justify-between items-start h-[92dvh] sm:h-[100vh] '>
-			
-				<ChatHeader conversation={conversation} />
-		
+			<ChatHeader conversation={conversation} />
+
 			<div className='flex flex-col justify-end w-full h-full overflow-y-scroll scrollbar-hide'>
 				<div
 					className='flex flex-col w-full gap-1 p-4 px-2 overflow-y-scroll sm:px-8 scrollbar-hide'
@@ -76,7 +76,11 @@ const ChatArea = ({ conversation }: Props) => {
 									Error fetching Messages
 								</div>
 							) : (
-								<div>loading</div>
+								Array(8)
+									.fill(1)
+									.map((_, index) => (
+										<SkeletonChatPill key={index} index={index} />
+									))
 							)}
 						</>
 					)}
