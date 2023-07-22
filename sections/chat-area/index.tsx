@@ -57,9 +57,9 @@ const ChatArea = ({ conversation }: Props) => {
 
 	return (
 		<div className='w-full flex flex-col justify-between items-start h-[92dvh] sm:h-[100vh] '>
-			<div className=''>
+			
 				<ChatHeader conversation={conversation} />
-			</div>
+		
 			<div className='flex flex-col justify-end w-full h-full overflow-y-scroll scrollbar-hide'>
 				<div
 					className='flex flex-col w-full gap-1 p-4 px-2 overflow-y-scroll sm:px-8 scrollbar-hide'
