@@ -16,7 +16,7 @@ const ChatHeader = ({ conversation }: Props) => {
 	let profile = getProfile(profiles, conversation.peerAddress);
 
 	return (
-		<div className='flex flex-row items-center justify-between w-full p-3'>
+		<div className='flex flex-row items-center justify-between w-full p-3 border-b-[1px] border-[#ebebeb]'>
 			<div className='flex flex-row items-center gap-2'>
 				<Avatar
 					size={{ xs: 36, sm: 36, md: 40, lg: 42, xl: 42, xxl: 42 }}
