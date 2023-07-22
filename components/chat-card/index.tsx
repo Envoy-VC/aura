@@ -31,6 +31,7 @@ const ChatCard = ({ conversation, setActiveChat }: Props) => {
 			<div
 				className='flex flex-row gap-4 cursor-pointer'
 				onClick={() => {
+					if(isLoading) return;
 					setActiveChat(conversation);
 				}}
 			>
@@ -117,9 +118,11 @@ const ChatCard = ({ conversation, setActiveChat }: Props) => {
 				</div>
 			</div>
 			<div className='flex justify-end'>
-				<Button type='ghost' size='middle' className='p-[0px] animate-none'>
-					<PiDotsThreeVerticalBold color='#666666' size={18} />
-				</Button>
+				{!isLoading && (
+					<Button type='ghost' size='middle' className='p-[0px] animate-none'>
+						<PiDotsThreeVerticalBold color='#666666' size={18} />
+					</Button>
+				)}
 			</div>
 		</div>
 	);
