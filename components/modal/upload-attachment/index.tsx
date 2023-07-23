@@ -9,7 +9,6 @@ import {
 } from '@xmtp/content-type-remote-attachment';
 import { Modal, Image, Progress, Button } from 'antd';
 import { PiUploadDuotone, PiUploadBold, PiTrashBold } from 'react-icons/pi';
-import { AttachmentProps } from '@/types';
 interface Props {
 	modalOpen: boolean;
 	setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
