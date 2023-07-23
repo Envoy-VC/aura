@@ -1,6 +1,6 @@
 import React from 'react';
 import { Avatar, Button, Skeleton } from 'antd';
-import { useMessages } from '@xmtp/react-sdk';
+import { DecodedMessage, useMessages } from '@xmtp/react-sdk';
 import { ChatContext } from '../layout/nested-layout';
 import { getMessageTime } from '@/utils';
 import { getProfile } from '@/services/profile';
@@ -24,6 +24,20 @@ const ChatCard = ({ conversation, setActiveChat }: Props) => {
 		direction: SortDirection.SORT_DIRECTION_DESCENDING,
 	});
 
+	const getLastMessage = (messages: DecodedMessage[]) => {
+		let message = messages?.at(0);
+		if (!message) return '';
+		if (message.contentType.typeId === 'remoteStaticAttachment') {
+			let filename = message.content.filename;
+			if (filename.length > 20) return filename?.slice(0, 20) + '...';
+			else return filename;
+		} else if (message.contentType.typeId === 'text') {
+			if (messages.at(0)?.content?.length > 20)
+				return messages.at(0)?.content?.slice(0, 20) + '...';
+			else return messages.at(0)?.content;
+		}
+	};
+
 	return (
 		<div
 			className={`flex flex-row items-center justify-between w-full gap-4 p-2 rounded-xl animate-all duration-200 ease-in-out select-none hover:bg-[#5a99ff2f]`}
@@ -31,7 +45,7 @@ const ChatCard = ({ conversation, setActiveChat }: Props) => {
 			<div
 				className='flex flex-row gap-4 cursor-pointer'
 				onClick={() => {
-					if(isLoading) return;
+					if (isLoading) return;
 					setActiveChat(conversation);
 				}}
 			>
@@ -89,10 +103,8 @@ const ChatCard = ({ conversation, setActiveChat }: Props) => {
 									}}
 									className='!max-w-[50px] !pr-2'
 								/>
-							) : messages.at(0)?.content?.length > 20 ? (
-								messages.at(0)?.content?.slice(0, 20) + '...'
 							) : (
-								(messages.at(0)?.content as string)
+								getLastMessage(messages!)
 							)}
 						</div>
 						<div>

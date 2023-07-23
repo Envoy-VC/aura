@@ -2,7 +2,13 @@ import React from 'react';
 import { useMessages, useStreamMessages } from '@xmtp/react-sdk';
 import { useAddress } from '@thirdweb-dev/react';
 
-import { ChatBox, ChatPill, SkeletonChatPill, ChatHeader } from '@/components';
+import {
+	ChatBox,
+	ChatPill,
+	SkeletonChatPill,
+	ChatHeader,
+	AttachmentPill,
+} from '@/components';
 
 import type { Conversation, DecodedMessage } from '@xmtp/react-sdk';
 
@@ -21,6 +27,7 @@ const ChatArea = ({ conversation }: Props) => {
 
 	React.useEffect(() => {
 		if (messages.length > 0) {
+			console.log(messages);
 			setStreamedMessages(messages);
 		}
 	}, [messages]);
@@ -54,13 +61,27 @@ const ChatArea = ({ conversation }: Props) => {
 					ref={chatContainer}
 				>
 					{!isLoading && !error ? (
-						streamedMessages.map((message) => (
-							<ChatPill
-								key={message.id}
-								{...message}
-								toBytes={message.toBytes}
-							/>
-						))
+						streamedMessages.map((message) => {
+							if (message.contentType.typeId === 'text') {
+								return (
+									<ChatPill
+										key={message.id}
+										{...message}
+										toBytes={message.toBytes}
+									/>
+								);
+							} else if (
+								message.contentType.typeId === 'remoteStaticAttachment'
+							) {
+								return (
+									<AttachmentPill
+										key={message.id}
+										{...message}
+										toBytes={message.toBytes}
+									/>
+								);
+							}
+						})
 					) : (
 						<>
 							{error ? (

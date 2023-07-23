@@ -9,16 +9,24 @@ import {
 } from '@xmtp/content-type-remote-attachment';
 import { Modal, Image, Progress, Button } from 'antd';
 import { PiUploadDuotone, PiUploadBold, PiTrashBold } from 'react-icons/pi';
-
+import { AttachmentProps } from '@/types';
 interface Props {
 	modalOpen: boolean;
 	setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	setRemoteAttachment: React.Dispatch<
+		React.SetStateAction<RemoteAttachment | undefined>
+	>;
 }
 
-const UploadAttachmentModal = ({ modalOpen, setModalOpen }: Props) => {
+const UploadAttachmentModal = ({
+	modalOpen,
+	setModalOpen,
+	setRemoteAttachment,
+}: Props) => {
 	const storage = useStorage();
 
 	const [file, setFile] = React.useState<File>();
+	const [remoteFile, setRemoteFile] = React.useState<RemoteAttachment>();
 	const [isUploading, setIsUploading] = React.useState<boolean>(false);
 	const [uploadProgress, setUploadProgress] = React.useState<number>(0);
 
@@ -34,6 +42,12 @@ const UploadAttachmentModal = ({ modalOpen, setModalOpen }: Props) => {
 		},
 	});
 
+	const handleModalClose = () => {
+		setModalOpen(false);
+		setFile(undefined);
+		setRemoteFile(undefined);
+	};
+
 	const uploadFile = async (file: File) => {
 		try {
 			setIsUploading(true);
@@ -48,16 +62,21 @@ const UploadAttachmentModal = ({ modalOpen, setModalOpen }: Props) => {
 				attachment,
 				new AttachmentCodec()
 			);
-			const uri = await storage?.upload(encryptedEncoded.payload, {
-				uploadWithoutDirectory: true,
-				alwaysUpload: false,
-				onProgress: (progress) => {
-					setUploadProgress(
-						Math.floor(Number((progress.progress / progress.total) * 100))
-					);
-				},
-			});
+			const uri = await storage?.upload(
+				new File([encryptedEncoded.payload.buffer], file.name),
+				{
+					uploadWithoutDirectory: true,
+					alwaysUpload: false,
+					onProgress: (progress) => {
+						let now = Number(progress.progress);
+						let total = Number(progress.total);
+						setUploadProgress(Math.floor(Number((now / total) * 100)));
+					},
+				}
+			);
+			console.log(uri);
 			let url = `https://ipfs.io/ipfs/${uri?.split('ipfs://').at(1)}`;
+			console.log(url);
 
 			const remoteAttachment: RemoteAttachment = {
 				url: url,
@@ -69,8 +88,7 @@ const UploadAttachmentModal = ({ modalOpen, setModalOpen }: Props) => {
 				filename: attachment.filename,
 				contentLength: attachment.data.byteLength,
 			};
-
-			console.log(remoteAttachment);
+			setRemoteFile(remoteAttachment);
 		} catch (error) {
 			console.log(error);
 		} finally {
@@ -93,17 +111,20 @@ const UploadAttachmentModal = ({ modalOpen, setModalOpen }: Props) => {
 						type='primary'
 						size='middle'
 						className='bg-[#2176FF] text-white text-[0.875rem]'
-						disabled={isUploading || !acceptedFiles.length}
+						disabled={
+							isUploading || !acceptedFiles.length || remoteFile === undefined
+						}
+						onClick={() => {
+							setRemoteAttachment(remoteFile);
+							handleModalClose();
+						}}
 					>
 						Done
 					</Button>
 				</div>
 			}
 			open={modalOpen}
-			onCancel={() => {
-				setModalOpen(false);
-				setFile(undefined);
-			}}
+			onCancel={handleModalClose}
 		>
 			<div className='flex flex-col gap-4 mt-6'>
 				<div

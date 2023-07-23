@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Skeleton, Spin } from 'antd';
+import { ContentTypeRemoteAttachment } from '@xmtp/content-type-remote-attachment';
 import { useAddress } from '@thirdweb-dev/react';
 import { ChatContext } from '../layout/nested-layout';
 import { formatTimestamp } from '@/utils';

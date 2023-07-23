@@ -3,13 +3,21 @@ import { Button } from 'antd';
 import UploadAttachmentModal from '../modal/upload-attachment';
 import { TbPhoto } from 'react-icons/tb';
 
-const ChatButtons = () => {
+import { RemoteAttachment } from '@xmtp/content-type-remote-attachment';
+interface Props {
+	setRemoteAttachment: React.Dispatch<
+		React.SetStateAction<RemoteAttachment | undefined>
+	>;
+}
+
+const ChatButtons = ({ setRemoteAttachment }: Props) => {
 	const [modalOpen, setModalOpen] = React.useState<boolean>(false);
 	return (
 		<>
 			<UploadAttachmentModal
 				modalOpen={modalOpen}
 				setModalOpen={setModalOpen}
+				setRemoteAttachment={setRemoteAttachment}
 			/>
 			<div className='flex flex-row items-center justify-start gap-0'>
 				<Button
