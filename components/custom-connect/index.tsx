@@ -37,7 +37,7 @@ const CustomConnect = ({ isMobile }: Props) => {
 			let client = await initialize({
 				signer,
 				options: {
-					env: 'dev',
+					env: 'production',
 				},
 			});
 			client!.registerCodec(new AttachmentCodec());
