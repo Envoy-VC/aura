@@ -92,7 +92,6 @@ const ChatBox = ({ conversation }: Props) => {
 						isSending ? 'opacity-60' : 'opacity-100'
 					}`}
 					size='large'
-					disabled={isSending}
 					icon={
 						!isSending && (
 							<PiArrowRightBold color='#fff' size={24} className='ml-2' />
