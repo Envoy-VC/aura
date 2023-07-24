@@ -12,6 +12,7 @@ import SkeletonChatPill from './chat-pill/chat-pill-skeleton';
 import ChatHeader from './chat-header';
 import CreateConversation from './create-conversation';
 import ChatFlags from './chat-flags';
+import SEO from './seo';
 
 export {
 	Layout,
@@ -28,6 +29,7 @@ export {
 	ChatHeader,
 	CreateConversation,
 	ChatFlags,
+	SEO,
 };
 	
 	

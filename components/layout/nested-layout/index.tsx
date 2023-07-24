@@ -6,7 +6,7 @@ import {
 	Client,
 } from '@xmtp/react-sdk';
 
-import { Sidebar, Navbar } from '@/components';
+import { Sidebar, Navbar, SEO } from '@/components';
 import { getENSProfile, getLensProfile } from '@/services/profile';
 
 import type { ProfileDetailsType } from '@/types';
@@ -123,6 +123,7 @@ const NestedLayout = ({ children }: Props) => {
 			}}
 		>
 			<div className='flex flex-col sm:flex-row'>
+				<SEO />
 				<Sidebar />
 				<Navbar />
 				{children}
