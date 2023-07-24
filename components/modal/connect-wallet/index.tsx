@@ -1,12 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { Modal, Button } from 'antd';
-import {
-	metamaskWallet,
-	walletConnect,
-	trustWallet,
-	useConnect,
-} from '@thirdweb-dev/react';
+import { metamaskWallet, walletConnect, useConnect } from '@thirdweb-dev/react';
 
 import { PiWalletFill } from 'react-icons/pi';
 import { metamaskLogo, walletConnectLogo } from '@/public';
@@ -16,7 +11,6 @@ interface Props {
 	setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const metamaskConfig = metamaskWallet();
-const trustWalletConfig = trustWallet();
 const walletConnectConfig = walletConnect();
 
 const ConnectWalletModal = ({ modalOpen, setModalOpen }: Props) => {
