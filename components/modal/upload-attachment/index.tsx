@@ -43,9 +43,11 @@ const UploadAttachmentModal = ({
 	});
 
 	const handleModalClose = () => {
+		if (isUploading) return;
 		setModalOpen(false);
 		setFile(undefined);
 		setRemoteFile(undefined);
+		setUploadProgress(0);
 	};
 
 	const uploadFile = async (file: File) => {
@@ -159,6 +161,7 @@ const UploadAttachmentModal = ({
 							className='!p-[0px] !animate-none mr-3'
 							disabled={isUploading}
 							onClick={() => {
+								setRemoteFile(undefined);
 								setFile(undefined);
 							}}
 						>
