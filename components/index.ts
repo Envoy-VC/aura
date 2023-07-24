@@ -11,6 +11,7 @@ import AttachmentPill from './attachment-pill';
 import SkeletonChatPill from './chat-pill/chat-pill-skeleton';
 import ChatHeader from './chat-header';
 import CreateConversation from './create-conversation';
+import ChatFlags from './chat-flags';
 
 export {
 	Layout,
@@ -26,4 +27,7 @@ export {
 	AttachmentPill,
 	ChatHeader,
 	CreateConversation,
+	ChatFlags,
 };
+	
+	

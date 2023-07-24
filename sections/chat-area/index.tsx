@@ -8,6 +8,7 @@ import {
 	SkeletonChatPill,
 	ChatHeader,
 	AttachmentPill,
+	ChatFlags,
 } from '@/components';
 
 import type { Conversation, DecodedMessage } from '@xmtp/react-sdk';
@@ -54,31 +55,34 @@ const ChatArea = ({ conversation }: Props) => {
 	return (
 		<div className='w-full flex flex-col justify-between items-start h-[92dvh] sm:h-[100vh] '>
 			<ChatHeader conversation={conversation} />
-
 			<div className='flex flex-col justify-end w-full h-full overflow-y-scroll scrollbar-hide'>
 				<div
 					className='flex flex-col w-full gap-1 p-4 px-2 overflow-y-scroll sm:px-8 scrollbar-hide'
 					ref={chatContainer}
 				>
 					{!isLoading && !error ? (
-						streamedMessages.map((message) => {
+						streamedMessages.map((message, index) => {
 							if (message.contentType.typeId === 'text') {
 								return (
-									<ChatPill
-										key={message.id}
-										{...message}
-										toBytes={message.toBytes}
-									/>
+									<div className='w-full' key={index}>
+										<ChatFlags
+											streamedMessages={streamedMessages}
+											index={index}
+										/>
+										<ChatPill {...message} toBytes={message.toBytes} />
+									</div>
 								);
 							} else if (
 								message.contentType.typeId === 'remoteStaticAttachment'
 							) {
 								return (
-									<AttachmentPill
-										key={message.id}
-										{...message}
-										toBytes={message.toBytes}
-									/>
+									<div className='w-full' key={index}>
+										<ChatFlags
+											streamedMessages={streamedMessages}
+											index={index}
+										/>
+										<AttachmentPill {...message} toBytes={message.toBytes} />
+									</div>
 								);
 							}
 						})
