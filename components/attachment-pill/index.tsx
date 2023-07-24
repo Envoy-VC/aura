@@ -6,7 +6,7 @@ import {
 	RemoteAttachmentCodec,
 } from '@xmtp/content-type-remote-attachment';
 
-import { Image } from 'antd';
+import { Image, Skeleton } from 'antd';
 
 import { formatTimestamp } from '@/utils';
 
@@ -49,9 +49,7 @@ const AttachmentPill = ({ content, sent, senderAddress }: DecodedMessage) => {
 				}`}
 			>
 				<div
-					className={`rounded-sm lg:rounded-md p-[3px] max-w-[300px] lg:max-w-[500px] flex items-center justify-center ${
-						senderAddress === address ? 'bg-[#2176FF]' : 'bg-[#F8F8F8]'
-					}`}
+					className={`rounded-sm lg:rounded-md max-w-[300px] lg:max-w-[500px] flex items-center justify-center`}
 				>
 					{attachment !== undefined ? (
 						<Image
@@ -66,7 +64,10 @@ const AttachmentPill = ({ content, sent, senderAddress }: DecodedMessage) => {
 					) : error ? (
 						'Error loading attachment'
 					) : (
-						'Loading attachment...'
+						<Skeleton.Image
+							active={true}
+							className='min-w-[300px] lg:min-w-[400px] min-h-[200px] lg:min-h-[300px]'
+						/>
 					)}
 				</div>
 			</div>
