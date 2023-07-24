@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { ALCHEMY_API_KEY } from '@/utils';
+import { ALCHEMY_API_KEY } from '@/utils/config';
 import { ProfileDetailsType, IDomain, ISocials } from '@/types';
 
 let provider = new ethers.providers.AlchemyProvider(

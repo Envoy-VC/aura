@@ -9,6 +9,7 @@ import {
 import { Avatar, Button, Skeleton } from 'antd';
 
 import { ConnectWalletModal } from '../modal';
+import { XMTP_ENVIRONMENT } from '@/utils/config';
 import { getProfile } from '@/services/profile';
 
 import {
@@ -38,7 +39,7 @@ const CustomConnect = ({ isMobile }: Props) => {
 			let client = await initialize({
 				signer,
 				options: {
-					env: 'production',
+					env: XMTP_ENVIRONMENT,
 				},
 			});
 			client!.registerCodec(new AttachmentCodec());

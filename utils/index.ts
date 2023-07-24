@@ -1,8 +1,3 @@
-export const WALLET_CONNECT_PROJECT_ID =
-	process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || '';
-
-export const ALCHEMY_API_KEY = process.env.NEXT_PUBLIC_ALCHEMY_API_KEY || '';
-
 export const formatTimestamp = (date: Date) => {
 	const hours = date.getHours();
 	const minutes = date.getMinutes();
