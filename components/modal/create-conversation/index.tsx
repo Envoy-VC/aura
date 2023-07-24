@@ -2,8 +2,6 @@ import React from 'react';
 import { ethers } from 'ethers';
 import { Modal, Input } from 'antd';
 
-import { useDebounce } from '@/hooks';
-
 import ChatCard from './chat-card';
 import { resolveLensHandle, resolveENSName } from '@/services/profile';
 
@@ -18,7 +16,6 @@ const CreateConversationModal = ({ modalOpen, setModalOpen }: Props) => {
 	const [value, setValue] = React.useState<string>('');
 	const [isLoading, setIsLoading] = React.useState<boolean>(true);
 	const [error, setError] = React.useState<boolean>(false);
-	const debouncedValue = useDebounce<string>(value, 500);
 
 	const isValidEthAddress = (address: string) => {
 		setIsLoading(true);
@@ -61,10 +58,10 @@ const CreateConversationModal = ({ modalOpen, setModalOpen }: Props) => {
 	};
 
 	React.useEffect(() => {
-		if (debouncedValue === '') {
+		if (value === '') {
 			setError(false);
 		}
-	}, [debouncedValue]);
+	}, [value]);
 
 	return (
 		<Modal
@@ -88,9 +85,9 @@ const CreateConversationModal = ({ modalOpen, setModalOpen }: Props) => {
 					onChange={(e) => handleValueChange(e.target.value)}
 					status={error ? 'error' : ''}
 				/>
-				{debouncedValue && !error && (
+				{value && !error && (
 					<div className='mt-2'>
-						<ChatCard value={debouncedValue} />
+						<ChatCard value={value} />
 					</div>
 				)}
 				{!isLoading && error && (
