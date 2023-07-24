@@ -17,7 +17,7 @@
 		"@types/react-dom": "18.2.6",
 		"@xmtp/content-type-remote-attachment": "^1.0.7",
 		"@xmtp/react-sdk": "^1.0.0-preview.40",
-		"antd": "^5.6.4",
+		"antd": "^5.7.0",
 		"autoprefixer": "10.4.14",
 		"eslint": "8.44.0",
 		"eslint-config-next": "13.4.9",

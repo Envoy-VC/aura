@@ -6,11 +6,25 @@ import {
 	RemoteAttachmentCodec,
 } from '@xmtp/content-type-remote-attachment';
 
-import { Image, Skeleton } from 'antd';
+import { Image, Skeleton, Space } from 'antd';
 
 import { formatTimestamp } from '@/utils';
 
+import {
+	DownloadOutlined,
+	RotateLeftOutlined,
+	RotateRightOutlined,
+	SwapOutlined,
+	ZoomInOutlined,
+	ZoomOutOutlined,
+} from '@ant-design/icons';
+
 import type { DecodedMessage } from '@xmtp/react-sdk';
+
+interface ToolbarButtonProps {
+	icon: React.ReactNode;
+	onClick: () => void;
+}
 
 const AttachmentPill = ({ content, sent, senderAddress }: DecodedMessage) => {
 	const address = useAddress();
@@ -34,6 +48,20 @@ const AttachmentPill = ({ content, sent, senderAddress }: DecodedMessage) => {
 			setError(true);
 		}
 	}, []);
+
+	const handleDownload = () => {
+		if (!attachment) return;
+		let url = URL.createObjectURL(
+			new Blob([attachment.data], { type: attachment.mimeType })
+		);
+		const link = document.createElement('a');
+		link.href = url;
+		link.download = attachment.filename;
+		document.body.appendChild(link);
+		link.click();
+		URL.revokeObjectURL(url);
+		link.remove();
+	};
 
 	return (
 		<div
@@ -60,6 +88,53 @@ const AttachmentPill = ({ content, sent, senderAddress }: DecodedMessage) => {
 							)}
 							alt={attachment.filename}
 							className='!w-full !h-full object-cover rounded-md'
+							preview={{
+								toolbarRender: (
+									_,
+									{
+										transform: { scale },
+										actions: {
+											onFlipY,
+											onFlipX,
+											onRotateLeft,
+											onRotateRight,
+											onZoomOut,
+											onZoomIn,
+										},
+									}
+								) => (
+									<Space size={12} className='gap-4 toolbar-wrapper'>
+										<DownloadOutlined
+											onClick={handleDownload}
+											style={{ fontSize: 20}}
+										/>
+										<SwapOutlined
+											rotate={90}
+											onClick={onFlipY}
+											style={{ fontSize: 20 }}
+										/>
+										<SwapOutlined onClick={onFlipX} style={{ fontSize: 20 }} />
+										<RotateLeftOutlined
+											onClick={onRotateLeft}
+											style={{ fontSize: 20 }}
+										/>
+										<RotateRightOutlined
+											onClick={onRotateRight}
+											style={{ fontSize: 20 }}
+										/>
+										<ZoomOutOutlined
+											disabled={scale === 1}
+											onClick={onZoomOut}
+											style={{ fontSize: 20 }}
+										/>
+										<ZoomInOutlined
+											disabled={scale === 50}
+											onClick={onZoomIn}
+											style={{ fontSize: 20 }}
+										/>
+									</Space>
+								),
+							}}
 						/>
 					) : error ? (
 						'Error loading attachment'
