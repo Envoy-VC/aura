@@ -1,38 +1,65 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🔼 Aura
 
-## Getting Started
+Aura is a decentralized chat app powered by [XMTP](https://xmtp.org). With its secure encrypted messaging, ENS and Lens profiles, and seamless interoperability, Aura offers a user-friendly experience while prioritizing privacy and data security.
 
-First, run the development server:
+---
+
+## Features ✨
+
+Aura offers a range of exciting features that enhance your communication experience:
+
+1. **Seamless Ethereum Integration**: Built on the XMTP network, Aura allows you to communicate with any Ethereum wallet. Connect with friends, colleagues, and contacts effortlessly, regardless of their chosen wallet.
+2. **Interoperable Inbox**: Each user is provided with an interoperable inbox, giving you access to all XMTP messages you've exchanged, regardless of the app used to create them. Stay organized and keep track of your conversations in one convenient location.
+3. **ENS and Lens Integration**: Aura simplifies communication by enabling you to send messages to any ENS domain and Lens profiles. Say goodbye to the hassle of entering long addresses and effortlessly start conversations with ease.
+4. **Remote Attachment Support**: With Aura, you can send remote attachments using thirdweb. Whether it's images, videos, files, or more, easily share and collaborate with others by securely sending attachments within the app.
+5. **User-Friendly UI**: Aura boasts an intuitive and easy-to-use interface that works seamlessly on both mobile and desktop screens. Enjoy a consistent and visually appealing experience across devices, making communication effortless and enjoyable.
+
+---
+
+## Screenshots 📸
+
+---
+
+## Video Demo 🎥
+
+---
+
+## Tech Stack 💻
+
+- [XMTP](https://xmtp.org/)
+- [thirdweb](https://thirdweb.com/)
+- [antd](https://ant.design/)
+- [Next.js](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+
+---
+
+## Getting Started 🚀
+
+To get started with Arkway, the first step is to clone the GitHub repository. You can do this by running the following command in your terminal:
+
+```bash
+git clone https://github.com/Envoy-VC/arkway.git
+```
+
+Next, you'll need to install the project's dependencies. You can do this by running the following command in your terminal:
+
+```bash
+npm install
+```
+
+Before running the dev server, you'll need to set up some environment variables. These variables include:
+
+1. `NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID` - Obtain your Wallet Connect API key from https://cloud.walletconnect.com/app
+2. `NEXT_PUBLIC_ALCHEMY_API_KEY` - This key enables Aura to fetch ENS Profiles. Get your Alchemy API key from https://dashboard.alchemy.com
+3. `NEXT_PUBLIC_XMTP_ENVIRONMENT` - Set the XMTP environment variable to either '_production_,' '_dev_,' or '_local_.' By default, it is set to '_production_.'
+
+Great! You're almost ready to start using Arkway. The last step is to start the development server.
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Go to http://localhost:3000 to test Aura
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+---
