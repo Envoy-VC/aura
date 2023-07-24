@@ -1,6 +1,5 @@
 import React from 'react';
 import { useMessages, useStreamMessages } from '@xmtp/react-sdk';
-import { useAddress } from '@thirdweb-dev/react';
 
 import {
 	ChatBox,
@@ -18,7 +17,6 @@ interface Props {
 }
 
 const ChatArea = ({ conversation }: Props) => {
-	const address = useAddress();
 	const { messages, isLoading, error } = useMessages(conversation);
 	const chatContainer = React.useRef<HTMLDivElement>(null);
 

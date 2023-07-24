@@ -10,9 +10,9 @@ import {
 	PiChatTextDuotone,
 	PiBookmarkSimpleDuotone,
 } from 'react-icons/pi';
-import logo from '@/public/logo.png';
+import { auraLogo } from '@/public';
 
-import { ISidebarItem } from '@/types';
+import type { ISidebarItem } from '@/types';
 
 const Sidebar: React.FC = () => {
 	const { setActiveChat } = React.useContext(ChatContext);
@@ -68,7 +68,7 @@ const Sidebar: React.FC = () => {
 		<div className='h-screen max-w-[225px] border-r-2 border-[#F6F6F6] p-4 sm:flex flex-col justify-between hidden'>
 			<div>
 				<div className='w-10 h-10'>
-					<Avatar src={logo.src} size={40} className='ml-2' />
+					<Avatar src={auraLogo.src} size={40} className='ml-2' />
 				</div>
 				<div className='flex flex-col gap-4 mt-12'>
 					{SidebarItems.map((item, index) => (

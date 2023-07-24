@@ -1,15 +1,12 @@
 import React from 'react';
-import { ContentTypeRemoteAttachment } from '@xmtp/content-type-remote-attachment';
 import { useAddress } from '@thirdweb-dev/react';
-import { ChatContext } from '../layout/nested-layout';
+
 import { formatTimestamp } from '@/utils';
-import { getProfile } from '@/services/profile';
+
 import type { DecodedMessage } from '@xmtp/react-sdk';
 
 const ChatPill = ({ content, sent, senderAddress }: DecodedMessage) => {
 	const address = useAddress();
-	const { profiles, isLoading } = React.useContext(ChatContext);
-	let profile = getProfile(profiles, senderAddress);
 	return (
 		<div
 			className={`flex flex-col ${

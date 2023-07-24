@@ -1,8 +1,8 @@
 import React from 'react';
 import type { ReactElement } from 'react';
 import type { NextPageWithLayout } from './_app';
-import NestedLayout from '@/components/layout/nested-layout';
 import { ChatContext } from '@/components/layout/nested-layout';
+import NestedLayout from '@/components/layout/nested-layout';
 
 import { Layout, ChatList } from '@/components';
 import { ChatArea } from '@/sections';

@@ -1,14 +1,15 @@
 import React from 'react';
-import { Avatar, Button, Skeleton } from 'antd';
+import { ChatContext } from '../layout/nested-layout';
 import { useAddress, useSigner, useDisconnect } from '@thirdweb-dev/react';
 import { useClient } from '@xmtp/react-sdk';
 import {
 	AttachmentCodec,
 	RemoteAttachmentCodec,
 } from '@xmtp/content-type-remote-attachment';
-import { ChatContext } from '../layout/nested-layout/index';
-import { getProfile } from '@/services/profile';
+import { Avatar, Button, Skeleton } from 'antd';
+
 import { ConnectWalletModal } from '../modal';
+import { getProfile } from '@/services/profile';
 
 import {
 	PiSignOutDuotone,

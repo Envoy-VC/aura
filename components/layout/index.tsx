@@ -8,7 +8,7 @@ import {
 } from '@thirdweb-dev/react';
 
 import { XMTPProvider } from '@xmtp/react-sdk';
-import { WALLET_CONNECT_PROJECT_ID } from '../../utils/index';
+import { WALLET_CONNECT_PROJECT_ID } from '@/utils';
 
 interface Props {
 	children: React.ReactNode;

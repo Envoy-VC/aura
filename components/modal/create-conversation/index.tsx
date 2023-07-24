@@ -1,12 +1,12 @@
 import React from 'react';
 import { ethers } from 'ethers';
-
 import { Modal, Input } from 'antd';
+
 import { useDebounce } from '@/hooks';
 
+import ChatCard from './chat-card';
 import { resolveLensHandle, resolveENSName } from '@/services/profile';
 
-import ChatCard from './chat-card';
 import { PiEnvelopeSimpleDuotone, PiMagnifyingGlassBold } from 'react-icons/pi';
 
 interface Props {

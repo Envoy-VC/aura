@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button } from 'antd';
 import UploadAttachmentModal from '../modal/upload-attachment';
+
 import { TbPhoto } from 'react-icons/tb';
 
-import { RemoteAttachment } from '@xmtp/content-type-remote-attachment';
+import type { RemoteAttachment } from '@xmtp/content-type-remote-attachment';
 interface Props {
 	setRemoteAttachment: React.Dispatch<
 		React.SetStateAction<RemoteAttachment | undefined>

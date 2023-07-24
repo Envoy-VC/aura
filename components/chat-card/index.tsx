@@ -1,12 +1,14 @@
 import React from 'react';
-import { Avatar, Button, Skeleton } from 'antd';
-import { DecodedMessage, useMessages } from '@xmtp/react-sdk';
 import { ChatContext } from '../layout/nested-layout';
+import { useMessages, SortDirection } from '@xmtp/react-sdk';
+import { Avatar, Button, Skeleton } from 'antd';
+
 import { getMessageTime } from '@/utils';
 import { getProfile } from '@/services/profile';
 
 import { PiDotsThreeVerticalBold, PiUserBold } from 'react-icons/pi';
-import { Conversation, SortDirection } from '@xmtp/react-sdk';
+
+import type { Conversation, DecodedMessage } from '@xmtp/react-sdk';
 
 interface Props {
 	conversation: Conversation;
@@ -16,11 +18,8 @@ interface Props {
 const ChatCard = ({ conversation, setActiveChat }: Props) => {
 	const { profiles, isLoading } = React.useContext(ChatContext);
 	let profile = getProfile(profiles, conversation?.peerAddress);
-	let data = profiles.find(
-		(profile) => profile.address === conversation?.peerAddress
-	);
 
-	const { messages, isLoading: isMessagesLoading } = useMessages(conversation, {
+	const { messages } = useMessages(conversation, {
 		direction: SortDirection.SORT_DIRECTION_DESCENDING,
 	});
 

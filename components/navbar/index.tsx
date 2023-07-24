@@ -3,7 +3,7 @@ import { Avatar, Button, Drawer } from 'antd';
 import NavbarDrawer from './drawer';
 
 import { PiListBold } from 'react-icons/pi';
-import logo from '@/public/logo.png';
+import { auraLogo } from '@/public';
 
 const Navbar = () => {
 	const [open, setOpen] = React.useState<boolean>(false);
@@ -23,7 +23,7 @@ const Navbar = () => {
 				<PiListBold color='#666666' size={28} />
 			</Button>
 			<div className='w-8 h-8'>
-				<Avatar src={logo.src} size={36} />
+				<Avatar src={auraLogo.src} size={36} />
 			</div>
 			<Drawer
 				title={null}

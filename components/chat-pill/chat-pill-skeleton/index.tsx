@@ -17,7 +17,7 @@ const SkeletonChatPill = ({ index }: { index: number }) => {
 					<Skeleton
 						active
 						paragraph={{
-							rows: Math.floor(Math.random() * 3),
+							rows: Math.floor(Math.random() * 2),
 							className: '!p-0 !m-2',
 						}}
 						title={{

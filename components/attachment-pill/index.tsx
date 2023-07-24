@@ -9,6 +9,7 @@ import {
 import { Image } from 'antd';
 
 import { formatTimestamp } from '@/utils';
+
 import type { DecodedMessage } from '@xmtp/react-sdk';
 
 const AttachmentPill = ({ content, sent, senderAddress }: DecodedMessage) => {

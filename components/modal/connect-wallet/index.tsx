@@ -9,8 +9,7 @@ import {
 } from '@thirdweb-dev/react';
 
 import { PiWalletFill } from 'react-icons/pi';
-import metamaskLogo from '@/public/metamask.png';
-import walletConnectLogo from '@/public/walletConnect.png';
+import { metamaskLogo, walletConnectLogo } from '@/public';
 
 interface Props {
 	modalOpen: boolean;
@@ -57,7 +56,7 @@ const ConnectWalletModal = ({ modalOpen, setModalOpen }: Props) => {
 					size='large'
 					onClick={() => handleConnect(metamaskConfig)}
 				>
-					<Image src={metamaskLogo} alt='metamask' width={24} height={24} />
+					<Image src={metamaskLogo.src} alt='metamask' width={24} height={24} />
 					MetaMask
 				</Button>
 				<Button
@@ -66,7 +65,7 @@ const ConnectWalletModal = ({ modalOpen, setModalOpen }: Props) => {
 					onClick={() => handleConnect(walletConnectConfig)}
 				>
 					<Image
-						src={walletConnectLogo}
+						src={walletConnectLogo.src}
 						alt='metamask'
 						width={24}
 						height={24}

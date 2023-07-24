@@ -7,10 +7,9 @@ import {
 } from '@xmtp/react-sdk';
 
 import { Sidebar, Navbar } from '@/components';
-
 import { getENSProfile, getLensProfile } from '@/services/profile';
 
-import { ProfileDetailsType } from '@/types';
+import type { ProfileDetailsType } from '@/types';
 
 interface IChatContext {
 	conversations: Conversation[];
@@ -48,7 +47,6 @@ const NestedLayout = ({ children }: Props) => {
 
 	const onConversation = React.useCallback(
 		async (conversation: Conversation) => {
-			let profile: ProfileDetailsType = { address: conversation?.peerAddress };
 			let ensProfile = await getENSProfile(conversation?.peerAddress);
 			let lensProfile = await getLensProfile(conversation?.peerAddress);
 			setProfiles((prev) => [

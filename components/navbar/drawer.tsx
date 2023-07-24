@@ -1,7 +1,8 @@
 import React from 'react';
+import { ChatContext } from '../layout/nested-layout';
 import { Button } from 'antd';
 import { CustomConnect } from '@/components';
-import { ChatContext } from '../layout/nested-layout';
+
 import {
 	PiChatsDuotone,
 	PiUsersThreeDuotone,
@@ -9,7 +10,7 @@ import {
 	PiBookmarkSimpleDuotone,
 } from 'react-icons/pi';
 
-import { ISidebarItem, SidebarItem } from '@/types';
+import type { ISidebarItem, SidebarItem } from '@/types';
 
 const NavbarDrawer = () => {
 	const [activeTab, setActiveTab] = React.useState<SidebarItem>('chat');

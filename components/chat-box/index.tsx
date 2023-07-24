@@ -2,12 +2,12 @@ import React from 'react';
 import { useSendMessage, useClient } from '@xmtp/react-sdk';
 import {
 	RemoteAttachment,
-	RemoteAttachmentCodec,
 	ContentTypeRemoteAttachment,
 	Attachment,
 } from '@xmtp/content-type-remote-attachment';
-import { Input, Button, Spin, Image } from 'antd';
+import { Input, Button, Spin } from 'antd';
 import ChatButtons from '../chat-buttons';
+
 import { PiArrowRightBold, PiTrashBold } from 'react-icons/pi';
 import { LoadingOutlined } from '@ant-design/icons';
 

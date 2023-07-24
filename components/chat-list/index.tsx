@@ -1,12 +1,13 @@
 import React from 'react';
 import { ChatContext } from '../layout/nested-layout';
-import { Conversation, useClient } from '@xmtp/react-sdk';
+import { useClient } from '@xmtp/react-sdk';
 import { useAddress } from '@thirdweb-dev/react';
-import { Input, Button } from 'antd';
+import { Input } from 'antd';
 
 import { ChatCard, CreateConversation } from '@/components';
-
 import { PiMagnifyingGlassDuotone } from 'react-icons/pi';
+
+import type { Conversation } from '@xmtp/react-sdk';
 
 export interface ChatProps {
 	conversations: Conversation[];

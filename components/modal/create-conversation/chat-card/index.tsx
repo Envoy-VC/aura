@@ -1,13 +1,14 @@
 import React from 'react';
+import { ChatContext } from '@/components/layout/nested-layout';
 import { useStartConversation, useCanMessage } from '@xmtp/react-sdk';
 import { Skeleton, Avatar, Button, Input, Spin } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
 
 import { getLensProfile, getENSProfile } from '@/services/profile';
-import { ChatContext } from '@/components/layout/nested-layout';
 
+import { LoadingOutlined } from '@ant-design/icons';
 import { PiUserBold, PiTelegramLogoBold } from 'react-icons/pi';
-import { ProfileDetailsType } from '@/types';
+
+import type { ProfileDetailsType } from '@/types';
 
 interface Props {
 	value: string;

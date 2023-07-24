@@ -8,6 +8,7 @@ import {
 	RemoteAttachment,
 } from '@xmtp/content-type-remote-attachment';
 import { Modal, Image, Progress, Button } from 'antd';
+
 import { PiUploadDuotone, PiUploadBold, PiTrashBold } from 'react-icons/pi';
 interface Props {
 	modalOpen: boolean;
