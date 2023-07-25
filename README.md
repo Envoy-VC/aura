@@ -18,9 +18,38 @@ Aura offers a range of exciting features that enhance your communication experie
 
 ## Screenshots 📸
 
+<table>
+  <tr>
+    <td valign="top" width="50%">
+      <br>
+      <img src="https://ipfs.io/ipfs/Qmdm1t4Jh89ZhvAxsXFECzVzrHgRYsRK4woj3KmugvdD43/conversation.png" alt="Conversation" >
+    </td>
+    <td valign="top" width="50%">
+      <br>
+      <img src="https://ipfs.io/ipfs/Qmdm1t4Jh89ZhvAxsXFECzVzrHgRYsRK4woj3KmugvdD43/attachments.png" alt="Attachments" >
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td valign="top" width="50%">
+      <img src="https://ipfs.io/ipfs/Qmdm1t4Jh89ZhvAxsXFECzVzrHgRYsRK4woj3KmugvdD43/create-attachment.png" alt="Create Attachment" >
+    </td>
+    <td valign="top" width="50%">
+      <img src="https://ipfs.io/ipfs/Qmdm1t4Jh89ZhvAxsXFECzVzrHgRYsRK4woj3KmugvdD43/start-conversation.png" alt="Start Conversation" >
+    </td>
+  </tr>
+</table>
+
 ---
 
 ## Video Demo 🎥
+
+https://youtu.be/fdXjAnUzCVk
+
+https://github.com/Envoy-VC/aura/assets/65389981/6b402346-4906-4bd5-909d-abe20253297c
+
 
 ---
 
