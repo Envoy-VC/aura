@@ -68,7 +68,7 @@ https://github.com/Envoy-VC/aura/assets/65389981/6b402346-4906-4bd5-909d-abe2025
 To get started with Arkway, the first step is to clone the GitHub repository. You can do this by running the following command in your terminal:
 
 ```bash
-git clone https://github.com/Envoy-VC/arkway.git
+git clone https://github.com/Envoy-VC/aura.git
 ```
 
 Next, you'll need to install the project's dependencies. You can do this by running the following command in your terminal:
